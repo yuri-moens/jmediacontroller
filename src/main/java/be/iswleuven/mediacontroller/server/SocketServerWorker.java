@@ -44,7 +44,7 @@ public class SocketServerWorker implements Runnable, Observer {
   
       String input;
       while ((input = in.readLine()) != null ) {
-        socketServer.getCommandBus().add(input, this);
+        socketServer.getCommandBus().send(input, this);
       }
     } catch (IOException e) {
       e.printStackTrace();

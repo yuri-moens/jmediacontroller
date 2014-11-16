@@ -1,9 +1,5 @@
 package be.iswleuven.mediacontroller.plugin.admin;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.plugin.Plugin;
 
 public class AdminPlugin extends Plugin {
@@ -16,15 +12,10 @@ public class AdminPlugin extends Plugin {
     
     initializeCommands();
   }
-  
+
   @Override
-  protected void initializeCommands() {
-    Map<String, Command> commands = new HashMap<String, Command>();
-    
-    Command command = new HelpCommand();
-    commands.put(command.getCommandString(), command);
-    
-    setCommands(commands);
+  public void initializeCommands() {
+    registerCommand(HelpCommand.class);
   }
   
 }

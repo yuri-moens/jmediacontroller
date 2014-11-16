@@ -1,11 +1,12 @@
 package be.iswleuven.mediacontroller.command;
 
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Queue;
 
+import be.iswleuven.mediacontroller.util.Observable;
 import be.iswleuven.mediacontroller.util.Observer;
 
-public class CommandBus {
+public class CommandBus extends Observable {
   
   /**
    * The instance of the command bus.
@@ -13,9 +14,9 @@ public class CommandBus {
   private static CommandBus commandBus;
 
   /**
-   * The commands list.
+   * The commands queue.
    */
-  private List<Command> commands;
+  private Queue<Command> commands;
   
   /**
    * The command factory.
@@ -44,12 +45,12 @@ public class CommandBus {
   }
   
   /**
-   * Add the command to the command bus.
+   * Send the command to the command bus.
    * 
    * @param command
    * @param obs
    */
-  public void add(String command, Observer obs) {
+  public void send(String command, Observer obs) {
     add(commandFactory.createCommand(command, obs));
   }
   
@@ -60,6 +61,17 @@ public class CommandBus {
    */
   public void add(Command command) {
     commands.add(command);
+    
+    notifyObservers("Command added");
+  }
+  
+  /**
+   * Get the commands waiting to be executed.
+   * 
+   * @return
+   */
+  public Queue<Command> getCommands() {
+    return commands;
   }
   
 }

@@ -7,49 +7,15 @@ public abstract class Command extends Observable {
   /**
    * The command string.
    */
-  private String commandString;
-  
-  /**
-   * The number of parameters.
-   */
-  private int numberOfParams;
-  
-  /**
-   * Create a new command.
-   * 
-   * @param commandString
-   */
-  public Command(String commandString) {
-    this(commandString, 0);
-  }
-  
-  /**
-   * Create a new command.
-   * 
-   * @param commandString
-   * @param numberOfParams
-   */
-  public Command(String commandString, int numberOfParams) {
-    this.commandString = commandString;
-    this.numberOfParams = numberOfParams;
-  }
+  public static final String commandString = null;
   
   /**
    * Get the command string.
    * 
    * @return
    */
-  public String getCommandString() {
+  public static String getCommandString() {
     return commandString;
-  }
-  
-  /**
-   * Get the number of parameters.
-   * 
-   * @return
-   */
-  public int getNumberOfParams() {
-    return numberOfParams;
   }
   
   /**

@@ -47,7 +47,7 @@ public class ServerHandler {
    */
   public void addServers(String[] servers) {
     CommandBus commandBus = CommandBus.getInstance();
-    
+
     for (String server : servers) {
       try {
         String name = server.split(":")[0];

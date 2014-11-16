@@ -5,11 +5,9 @@ import be.iswleuven.mediacontroller.command.Command;
 public class HelpCommand extends Command {
   
   /**
-   * Create a new help command.
+   * The command string.
    */
-  public HelpCommand() {
-    super("help");
-  }
+  public static final String commandString = "help";
 
   @Override
   public void execute() {

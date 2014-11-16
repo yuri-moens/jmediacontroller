@@ -1,7 +1,9 @@
 package be.iswleuven.mediacontroller.plugin;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
+import be.iswleuven.mediacontroller.MediaController;
 import be.iswleuven.mediacontroller.command.Command;
 
 public abstract class Plugin {
@@ -29,7 +31,7 @@ public abstract class Plugin {
   /**
    * The commands this plugin provides.
    */
-  private Map<String, Command> commands;
+  private Map<String, Class<? extends Command>> commands;
 
   /**
    * Create a new plugin.
@@ -87,7 +89,7 @@ public abstract class Plugin {
    * 
    * @return
    */
-  public Map<String, Command> getCommands() {
+  public Map<String, Class<? extends Command>> getCommands() {
     return commands;
   }
   
@@ -96,8 +98,30 @@ public abstract class Plugin {
    * 
    * @param commands
    */
-  public void setCommands(Map<String, Command> commands) {
+  public void setCommands(Map<String, Class<? extends Command>> commands) {
     this.commands = commands;
+  }
+  
+  /**
+   * Register the command to the plugin.
+   * 
+   * @param commandClass
+   * @return
+   * @throws Exception
+   */
+  public void registerCommand(Class<? extends Command> commandClass) {
+    try {
+      Field field = commandClass.getDeclaredField("commandString");
+      String command = (String) field.get(null);
+      
+      if (commands.put(command, commandClass) == null) {
+        throw new Exception();
+      }
+    } catch (Exception e) {
+      if (MediaController.verbose) {
+        System.out.println("Het commando " + commandClass.toString() + " kon niet geregistreerd worden.");
+      }
+    }    
   }
   
   @Override
@@ -114,6 +138,6 @@ public abstract class Plugin {
   /**
    * Initialize the commands associated with this plugin.
    */
-  protected abstract void initializeCommands();
+  public abstract void initializeCommands();
   
 }

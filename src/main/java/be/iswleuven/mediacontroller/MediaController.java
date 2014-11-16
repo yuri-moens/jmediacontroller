@@ -52,6 +52,8 @@ public class MediaController {
     config = ConfigLoader.load(configFile);
     serverHandler = ServerHandler.getInstance();
     pluginHandler = PluginHandler.getInstance();
+    
+    serverHandler.startAllServers();
   }
   
   /**
