@@ -49,8 +49,9 @@ public class CommandBus extends Observable {
    * 
    * @param command
    * @param obs
+   * @throws CommandException
    */
-  public void send(String command, Observer obs) {
+  public void send(String command, Observer obs) throws CommandException {
     add(commandFactory.createCommand(command, obs));
   }
   

@@ -2,6 +2,7 @@ package be.iswleuven.mediacontroller;
 
 import java.io.File;
 
+import be.iswleuven.mediacontroller.command.CommandHandler;
 import be.iswleuven.mediacontroller.config.Config;
 import be.iswleuven.mediacontroller.config.ConfigLoader;
 import be.iswleuven.mediacontroller.plugin.PluginHandler;
@@ -35,6 +36,11 @@ public class MediaController {
   public static PluginHandler pluginHandler;
   
   /**
+   * The command handler.
+   */
+  public static CommandHandler commandHandler;
+  
+  /**
    * The configuration file.
    */
   private static File configFile = new File(System.getProperty("user.home") + "/.mediacontroller/mc.conf");
@@ -52,6 +58,7 @@ public class MediaController {
     config = ConfigLoader.load(configFile);
     serverHandler = ServerHandler.getInstance();
     pluginHandler = PluginHandler.getInstance();
+    commandHandler = CommandHandler.getInstance();
     
     serverHandler.startAllServers();
   }

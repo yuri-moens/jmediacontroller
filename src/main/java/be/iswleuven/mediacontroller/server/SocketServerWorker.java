@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import be.iswleuven.mediacontroller.MediaController;
-import be.iswleuven.mediacontroller.command.CommandNotFoundException;
+import be.iswleuven.mediacontroller.command.CommandException;
 import be.iswleuven.mediacontroller.util.Observable;
 import be.iswleuven.mediacontroller.util.Observer;
 
@@ -48,7 +48,7 @@ public class SocketServerWorker implements Runnable, Observer {
       while ((input = in.readLine()) != null ) {
         try {
           socketServer.getCommandBus().send(input, this);
-        } catch (CommandNotFoundException e) {
+        } catch (CommandException e) {
           out.println(e.getMessage());
         }
       }

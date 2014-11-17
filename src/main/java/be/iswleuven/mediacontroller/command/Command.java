@@ -7,15 +7,29 @@ public abstract class Command extends Observable {
   /**
    * The command string.
    */
-  public static final String commandString = null;
+  public static final String COMMAND_STRING = null;
   
   /**
-   * Get the command string.
-   * 
-   * @return
+   * The number of allowed parameters.
    */
-  public static String getCommandString() {
-    return commandString;
+  public static final int NUMBER_OF_PARAMS = 0;
+  
+  /**
+   * The parameters array.
+   */
+  protected String[] parameters;
+  
+  /**
+   * Set the parameters.
+   * 
+   * @param parameters
+   */
+  public void setParameters(String[] parameters) throws InvalidParametersException {
+    if (parameters.length != NUMBER_OF_PARAMS) {
+      throw new InvalidParametersException(parameters.length, NUMBER_OF_PARAMS);
+    }
+    
+    this.parameters = parameters;
   }
   
   /**

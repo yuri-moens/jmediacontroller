@@ -7,15 +7,11 @@ public class HelpCommand extends Command {
   /**
    * The command string.
    */
-  public static final String commandString = "help";
-  
-  public HelpCommand(String param1, String param2) {
-    
-  }
+  public static final String COMMAND_STRING = "help";
 
   @Override
   public void execute() {
-    
+    notifyObservers("Hello world from help command!");
   }
 
 }

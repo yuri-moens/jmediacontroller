@@ -22,6 +22,8 @@ public class CommandHandler implements Observer {
    */
   private CommandHandler(CommandBus commandBus) {
     this.commandBus = commandBus;
+    
+    this.commandBus.registerObserver(this);
   }
   
   /**

@@ -113,7 +113,7 @@ public abstract class Plugin {
    */
   public void registerCommand(Class<? extends Command> commandClass) {
     try {
-      Field field = commandClass.getDeclaredField("commandString");
+      Field field = commandClass.getDeclaredField("COMMAND_STRING");
       String command = (String) field.get(null);
       
       commands.put(command, commandClass);
