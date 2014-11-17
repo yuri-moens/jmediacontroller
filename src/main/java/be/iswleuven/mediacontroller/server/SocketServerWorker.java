@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import be.iswleuven.mediacontroller.MediaController;
+import be.iswleuven.mediacontroller.command.CommandNotFoundException;
 import be.iswleuven.mediacontroller.util.Observable;
 import be.iswleuven.mediacontroller.util.Observer;
 
@@ -44,10 +46,16 @@ public class SocketServerWorker implements Runnable, Observer {
   
       String input;
       while ((input = in.readLine()) != null ) {
-        socketServer.getCommandBus().send(input, this);
+        try {
+          socketServer.getCommandBus().send(input, this);
+        } catch (CommandNotFoundException e) {
+          out.println(e.getMessage());
+        }
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      if (MediaController.verbose) {
+        System.out.println("Verbinding verbroken.");
+      }
     }
   }
 
