@@ -1,6 +1,7 @@
 package be.iswleuven.mediacontroller.plugin;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
 
 import be.iswleuven.mediacontroller.MediaController;
@@ -46,6 +47,7 @@ public abstract class Plugin {
     this.version = version;
     this.commandNamespace = commandNamespace;
     this.authors = authors;
+    this.commands = new HashMap<String, Class<? extends Command>>();
   }
   
   /**
@@ -114,9 +116,7 @@ public abstract class Plugin {
       Field field = commandClass.getDeclaredField("commandString");
       String command = (String) field.get(null);
       
-      if (commands.put(command, commandClass) == null) {
-        throw new Exception();
-      }
+      commands.put(command, commandClass);
     } catch (Exception e) {
       if (MediaController.verbose) {
         System.out.println("Het commando " + commandClass.toString() + " kon niet geregistreerd worden.");

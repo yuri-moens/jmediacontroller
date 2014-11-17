@@ -45,6 +45,15 @@ public class PluginHandler {
   }
   
   /**
+   * Get the plugins map.
+   * 
+   * @return
+   */
+  public Map<String, Plugin> getPlugins() {
+    return this.plugins;
+  }
+  
+  /**
    * Add the plugins to the plugins map.
    * 
    * @param plugins
@@ -66,7 +75,7 @@ public class PluginHandler {
           
           Plugin pluginInstance = (Plugin) constructor.newInstance();
           
-          this.plugins.put(plugin, pluginInstance);
+          this.plugins.put(pluginInstance.getCommandNamespace(), pluginInstance);
         } else {
           throw new PluginNotFoundException(plugin);
         }
