@@ -1,6 +1,6 @@
 package be.iswleuven.mediacontroller.command;
 
-public class CommandNotFoundException extends Exception{
+public class CommandNotFoundException extends CommandException {
 
   /**
    * Serial ID
@@ -11,7 +11,7 @@ public class CommandNotFoundException extends Exception{
    * Create a new command not found exception.
    */
   public CommandNotFoundException(String command) {
-    super("Command \"" + command + "\" not found.");
+    super("Commando \"" + command + "\" niet gevonden.");
   }
 
 }
