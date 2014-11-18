@@ -117,9 +117,15 @@ public abstract class Plugin {
       String command = (String) field.get(null);
       
       commands.put(command, commandClass);
+    } catch (NoSuchFieldException e) {
+      if (MediaController.verbose) {
+        System.out.println("Het commando " + commandClass.toString() + " kon niet geregistreerd worden.");
+        System.out.println("Heeft het commando een publieke statische COMMANDO_STRING variabele?");        
+      }
     } catch (Exception e) {
       if (MediaController.verbose) {
         System.out.println("Het commando " + commandClass.toString() + " kon niet geregistreerd worden.");
+        e.printStackTrace();
       }
     }    
   }

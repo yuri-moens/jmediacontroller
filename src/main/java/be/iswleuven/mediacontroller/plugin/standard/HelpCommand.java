@@ -9,7 +9,7 @@ public class HelpCommand extends Command {
   /**
    * The command string.
    */
-  public static final String commandString = "help";
+  public static final String COMMAND_STRING = "help";
   
   /**
    * Create a new standard help command.
