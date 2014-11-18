@@ -8,7 +8,7 @@ public class StandardPlugin extends Plugin {
    * Create a new standard plugin.
    */
   public StandardPlugin() {
-    super("StandardPlugin", "1.0", "standard", "Yuri Moens");
+    super("StandardPlugin", "1.0", "default", "Yuri Moens");
     
     initializeCommands();
   }

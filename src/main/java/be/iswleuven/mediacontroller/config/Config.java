@@ -61,7 +61,7 @@ public class Config {
     Properties properties = new Properties();
     
     properties.setProperty("servers", "SocketServer:3333");
-    properties.setProperty("plugins", "StandardPlugin,AdminPlugin");
+    properties.setProperty("plugins", "StandardPlugin,AdminPlugin,YoutubePlugin");
     
     return properties;
   }
