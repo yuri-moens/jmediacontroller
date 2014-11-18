@@ -28,19 +28,19 @@ public class CommandFactory {
 
     Class<? extends Command> commandClass = findCommandClass(plugin, commandString);
 
-    Command command = null;
+    Injector injector = null;
     
     try {
-      Injector injector = (Injector) commandClass.getDeclaredField("injector").get(null);
-      
-      command = injector.getInstance(commandClass);
+      injector = (Injector) commandClass.getDeclaredField("injector").get(null);
     } catch (Exception e) {
       try {
-        command = commandClass.newInstance();
-      } catch (InstantiationException | IllegalAccessException e1) {
+        injector = (Injector) Command.class.getDeclaredField("injector").get(null);
+      } catch (Exception e1) {
         e1.printStackTrace();
-      }
+      } 
     }
+    
+    Command command = injector.getInstance(commandClass);
     
     command.setParameters(parameters);
     

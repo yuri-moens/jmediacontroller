@@ -1,6 +1,10 @@
 package be.iswleuven.mediacontroller.command;
 
+import be.iswleuven.mediacontroller.plugin.Plugin;
 import be.iswleuven.mediacontroller.server.Worker;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 public abstract class Command {
 
@@ -23,6 +27,25 @@ public abstract class Command {
    * The worker calling the command.
    */
   protected Worker worker;
+  
+  /**
+   * The plugin associated with the command.
+   */
+  protected final Plugin PLUGIN;
+  
+  /**
+   * The injector for the command.
+   */
+  public static Injector injector = Guice.createInjector(new CommandModule());
+  
+  /**
+   * Create a new command.
+   * 
+   * @param plugin
+   */
+  public Command(Plugin plugin) {
+    this.PLUGIN = plugin;
+  }
   
   /**
    * Get the parameters.

@@ -2,6 +2,8 @@ package be.iswleuven.mediacontroller.plugin.admin;
 
 import be.iswleuven.mediacontroller.command.Command;
 
+import com.google.inject.Inject;
+
 public class HelpCommand extends Command {
   
   /**
@@ -9,10 +11,21 @@ public class HelpCommand extends Command {
    */
   public static final String COMMAND_STRING = "help";
 
+  /**
+   * Create a new admin help command.
+   * 
+   * @param plugin
+   */
+  @Inject
+  public HelpCommand(AdminPlugin plugin) {
+    super(plugin);
+  }
+  
   @Override
   public void execute() {
-    setMessage("hello world, you are " + getWorker().getAddress());
+    String output = "";
     
+    setMessage(output);
     notifyWorker();
   }
 

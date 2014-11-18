@@ -1,10 +1,10 @@
-package be.iswleuven.mediacontroller.plugin.admin;
+package be.iswleuven.mediacontroller.command;
 
 import be.iswleuven.mediacontroller.server.ServerHandler;
 
 import com.google.inject.AbstractModule;
 
-public class ServerModule extends AbstractModule {
+public class CommandModule extends AbstractModule {
 
   @Override
   protected void configure() {

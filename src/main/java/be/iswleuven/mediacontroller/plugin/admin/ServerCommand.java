@@ -6,9 +6,7 @@ import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.server.Server;
 import be.iswleuven.mediacontroller.server.ServerHandler;
 
-import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 
 public class ServerCommand extends Command {
 
@@ -16,11 +14,6 @@ public class ServerCommand extends Command {
    * The command string.
    */
   public static final String COMMAND_STRING = "server";
-  
-  /**
-   * The injector for this command.
-   */
-  public static Injector injector = Guice.createInjector(new ServerModule());
   
   /**
    * The server handler instance.
@@ -33,7 +26,8 @@ public class ServerCommand extends Command {
    * @param serverHandler
    */
   @Inject
-  public ServerCommand(ServerHandler serverHandler) {
+  public ServerCommand(AdminPlugin plugin, ServerHandler serverHandler) {
+    super(plugin);
     this.serverHandler = serverHandler;
   }
   
