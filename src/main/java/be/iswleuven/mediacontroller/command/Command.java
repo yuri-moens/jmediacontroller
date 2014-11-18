@@ -10,11 +10,6 @@ public abstract class Command {
   public static final String COMMAND_STRING = null;
   
   /**
-   * The number of allowed parameters.
-   */
-  public static final int NUMBER_OF_PARAMS = 0;
-  
-  /**
    * The parameters array.
    */
   protected String[] parameters;
@@ -30,15 +25,20 @@ public abstract class Command {
   protected Worker worker;
   
   /**
+   * Get the parameters.
+   * 
+   * @return
+   */
+  public String[] getParameters() {
+    return this.parameters;
+  }
+  
+  /**
    * Set the parameters.
    * 
    * @param parameters
    */
-  public void setParameters(String[] parameters) throws InvalidParametersException {
-    if (parameters.length != NUMBER_OF_PARAMS) {
-      throw new InvalidParametersException(parameters.length, NUMBER_OF_PARAMS);
-    }
-    
+  public void setParameters(String[] parameters) {
     this.parameters = parameters;
   }
   
@@ -88,6 +88,6 @@ public abstract class Command {
   /**
    * Execute the command.
    */
-  public abstract void execute();
+  public abstract void execute() throws CommandException;
   
 }

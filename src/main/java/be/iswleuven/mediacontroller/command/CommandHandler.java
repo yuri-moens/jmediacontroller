@@ -43,6 +43,14 @@ public class CommandHandler implements Observer {
   public void update(Observable obs, Object o) {
     Command command = commandBus.getCommands().poll();
     
-    command.execute();
+    try {
+      command.execute();
+    } catch (CommandException e) {
+      command.setMessage(e.getMessage());
+      command.notifyWorker();
+    } catch (ArrayIndexOutOfBoundsException ee) {
+      command.setMessage("Er werd een foute hoeveelheid parameters opgegeven.");
+      command.notifyWorker();
+    }
   }
 }
