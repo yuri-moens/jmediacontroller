@@ -41,6 +41,15 @@ public class ServerHandler {
   }
   
   /**
+   * Get the servers and their names.
+   * 
+   * @return
+   */
+  public Map<String, Server> getServers() {
+    return this.servers;
+  }
+  
+  /**
    * Add the servers to the servers map.
    * 
    * @param servers
