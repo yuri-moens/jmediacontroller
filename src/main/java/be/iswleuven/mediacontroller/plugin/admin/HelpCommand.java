@@ -11,7 +11,9 @@ public class HelpCommand extends Command {
 
   @Override
   public void execute() {
-    notifyObservers("Hello world from help command!");
+    setMessage("hello world, you are " + getWorker().getAddress());
+    
+    notifyWorker();
   }
 
 }

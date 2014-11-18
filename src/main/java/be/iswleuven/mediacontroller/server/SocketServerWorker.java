@@ -4,14 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 
 import be.iswleuven.mediacontroller.MediaController;
+import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
-import be.iswleuven.mediacontroller.util.Observable;
-import be.iswleuven.mediacontroller.util.Observer;
 
-public class SocketServerWorker implements Runnable, Observer {
+public class SocketServerWorker implements Runnable, Worker {
 
   /**
    * The client socket.
@@ -60,8 +60,13 @@ public class SocketServerWorker implements Runnable, Observer {
   }
 
   @Override
-  public void update(Observable obs, String message) {
-    out.println(message);
+  public InetAddress getAddress() {
+    return this.clientSocket.getInetAddress();
+  }
+
+  @Override
+  public void notify(Command command) {
+    this.out.println(command.getMessage());
   }
 
 }

@@ -1,10 +1,10 @@
 package be.iswleuven.mediacontroller.command;
 
 import java.util.LinkedList;
+import java.util.Observable;
 import java.util.Queue;
 
-import be.iswleuven.mediacontroller.util.Observable;
-import be.iswleuven.mediacontroller.util.Observer;
+import be.iswleuven.mediacontroller.server.Worker;
 
 public class CommandBus extends Observable {
   
@@ -48,11 +48,11 @@ public class CommandBus extends Observable {
    * Send the command to the command bus.
    * 
    * @param command
-   * @param obs
+   * @param worker
    * @throws CommandException
    */
-  public void send(String command, Observer obs) throws CommandException {
-    add(commandFactory.createCommand(command, obs));
+  public void send(String command, Worker worker) throws CommandException {
+    add(commandFactory.createCommand(command, worker));
   }
   
   /**
@@ -63,7 +63,8 @@ public class CommandBus extends Observable {
   public void add(Command command) {
     commands.add(command);
     
-    notifyObservers("Command added");
+    setChanged();
+    notifyObservers(this);
   }
   
   /**

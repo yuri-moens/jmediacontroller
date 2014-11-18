@@ -4,13 +4,13 @@ import java.util.Map;
 
 import be.iswleuven.mediacontroller.plugin.Plugin;
 import be.iswleuven.mediacontroller.plugin.PluginHandler;
-import be.iswleuven.mediacontroller.util.Observer;
+import be.iswleuven.mediacontroller.server.Worker;
 
 import com.google.inject.Injector;
 
 public class CommandFactory {
 
-  public Command createCommand(String rawCommand, Observer obs) throws CommandException {
+  public Command createCommand(String rawCommand, Worker worker) throws CommandException {
     String[] rawCommandArray = rawCommand.split(" ");
     
     Plugin plugin = getPlugin(rawCommandArray[0]);
@@ -44,7 +44,7 @@ public class CommandFactory {
     
     command.setParameters(parameters);
     
-    command.registerObserver(obs);
+    command.registerWorker(worker);
     
     return command;
   }

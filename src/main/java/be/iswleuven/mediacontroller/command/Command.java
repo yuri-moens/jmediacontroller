@@ -1,8 +1,8 @@
 package be.iswleuven.mediacontroller.command;
 
-import be.iswleuven.mediacontroller.util.Observable;
+import be.iswleuven.mediacontroller.server.Worker;
 
-public abstract class Command extends Observable {
+public abstract class Command {
 
   /**
    * The command string.
@@ -20,6 +20,16 @@ public abstract class Command extends Observable {
   protected String[] parameters;
   
   /**
+   * The output message of the command.
+   */
+  protected String message;
+  
+  /**
+   * The worker calling the command.
+   */
+  protected Worker worker;
+  
+  /**
    * Set the parameters.
    * 
    * @param parameters
@@ -30,6 +40,49 @@ public abstract class Command extends Observable {
     }
     
     this.parameters = parameters;
+  }
+  
+  /**
+   * Get the output message.
+   * 
+   * @return
+   */
+  public String getMessage() {
+    return this.message;
+  }
+  
+  /**
+   * Set the output message.
+   * 
+   * @param message
+   */
+  public void setMessage(String message) {
+    this.message = message;
+  }
+  
+  /**
+   * Return the worker.
+   * 
+   * @return
+   */
+  public Worker getWorker() {
+    return this.worker;
+  }
+  
+  /**
+   * Register a worker to the command.
+   * 
+   * @param worker
+   */
+  public void registerWorker(Worker worker) {
+    this.worker = worker;
+  }
+  
+  /**
+   * Notify the worker and pass a callback to the command.
+   */
+  public void notifyWorker() {
+   this.worker.notify(this);
   }
   
   /**

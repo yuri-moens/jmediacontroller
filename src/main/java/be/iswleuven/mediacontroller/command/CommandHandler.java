@@ -1,7 +1,7 @@
 package be.iswleuven.mediacontroller.command;
 
-import be.iswleuven.mediacontroller.util.Observable;
-import be.iswleuven.mediacontroller.util.Observer;
+import java.util.Observable;
+import java.util.Observer;
 
 public class CommandHandler implements Observer {
 
@@ -23,7 +23,7 @@ public class CommandHandler implements Observer {
   private CommandHandler(CommandBus commandBus) {
     this.commandBus = commandBus;
     
-    this.commandBus.registerObserver(this);
+    this.commandBus.addObserver(this);
   }
   
   /**
@@ -40,7 +40,7 @@ public class CommandHandler implements Observer {
   }
 
   @Override
-  public void update(Observable obs, String message) {
+  public void update(Observable obs, Object o) {
     Command command = commandBus.getCommands().poll();
     
     command.execute();
