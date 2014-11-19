@@ -1,8 +1,9 @@
 package be.iswleuven.mediacontroller.player;
 
 import java.util.LinkedList;
+import java.util.Observable;
 
-public class Playlist {
+public class Playlist extends Observable {
 
   /**
    * The playlist instance.
