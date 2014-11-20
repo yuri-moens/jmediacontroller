@@ -3,8 +3,8 @@ package be.iswleuven.mediacontroller.plugin.youtube;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
@@ -38,34 +38,31 @@ public class PlayCommand extends Command {
 
   @Override
   public void execute() throws CommandException {
-    String[] urls = getParameters();
+    String query = StringUtils.join(getParameters(), " ");
     
     try {
-      Song[] songs = getSongs(urls);
-      setMessage(songs[0].toString());
+      this.playlist.addSong(getSong(query));
     } catch (IOException e) {
       e.printStackTrace();
     }
-    
-    notifyWorker();
   }
   
-  private Song[] getSongs(String[] urls) throws IOException {
-    List<Song> songs = new ArrayList<Song>();
+  /**
+   * Create a song object from the given query.
+   * 
+   * @param query
+   * @return
+   * @throws IOException
+   */
+  private Song getSong(String query) throws IOException {    
+    Process p = Runtime.getRuntime().exec("python src/main/resources/youtube-dl --skip-download -g -e " + query);
     
-    for (String url : urls) {
-      Process p = Runtime.getRuntime().exec("python src/main/resources/youtube-dl --skip-download -g -e " + url);
-      
-      BufferedReader outputReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-      
-      String title = outputReader.readLine();
-      String streamUrl = outputReader.readLine();
-      
-      Song song = new Song(title, streamUrl, getWorker().getAddress());
-      songs.add(song);
-    }
+    BufferedReader outputReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
     
-    return songs.toArray(new Song[songs.size()]);
+    String title = outputReader.readLine();
+    String streamUrl = outputReader.readLine();
+    
+    return new Song(title, streamUrl, getWorker().getAddress());
   }
 
 }

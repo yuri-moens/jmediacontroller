@@ -26,7 +26,7 @@ public class VlcPlayer implements Observer, Player {
    */
   private VlcPlayer() {
     Playlist.getInstance().addObserver(this);
-    
+
     Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
     
     playerComponent = new AudioMediaListPlayerComponent();
@@ -37,7 +37,7 @@ public class VlcPlayer implements Observer, Player {
    * 
    * @return
    */
-  public VlcPlayer getInstance() {
+  public static VlcPlayer getInstance() {
     if (VlcPlayer.vlcPlayer == null) {
       VlcPlayer.vlcPlayer = new VlcPlayer();
     }
@@ -82,16 +82,20 @@ public class VlcPlayer implements Observer, Player {
 
   @Override
   public void setVolume(int amount) {
-    amount = Math.abs(amount) % 100;
+    amount = Math.abs(amount) % 101;
     
     this.playerComponent.getMediaPlayer().setVolume(amount);
   }
 
   @Override
-  public void update(Observable obs, Object o) {
+  public void update(Observable obs, Object o) {    
     Playlist playlist = (Playlist) o;
     
     this.playerComponent.getMediaList().addMedia(playlist.getSong().getUrl());
+    
+    if (! this.playerComponent.getMediaPlayer().isPlaying()) {
+      play();
+    }
   }
   
 }

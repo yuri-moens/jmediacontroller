@@ -5,6 +5,7 @@ import java.io.File;
 import be.iswleuven.mediacontroller.command.CommandHandler;
 import be.iswleuven.mediacontroller.config.Config;
 import be.iswleuven.mediacontroller.config.ConfigLoader;
+import be.iswleuven.mediacontroller.player.VlcPlayer;
 import be.iswleuven.mediacontroller.plugin.PluginHandler;
 import be.iswleuven.mediacontroller.server.ServerHandler;
 
@@ -59,6 +60,7 @@ public class MediaController {
     serverHandler = ServerHandler.getInstance();
     pluginHandler = PluginHandler.getInstance();
     commandHandler = CommandHandler.getInstance();
+    VlcPlayer.getInstance();
     
     serverHandler.startAllServers();
   }

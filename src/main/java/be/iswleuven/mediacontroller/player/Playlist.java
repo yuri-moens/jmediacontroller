@@ -46,6 +46,9 @@ public class Playlist extends Observable {
    */
   public void addSong(Song song) {
     this.songs.add(song);
+
+    setChanged();
+    notifyObservers(this);
   }
   
   /**
@@ -55,6 +58,9 @@ public class Playlist extends Observable {
    */
   public void addPlaylist(Playlist playlist) {
     this.songs.addAll(playlist.getSongs());
+    
+    setChanged();
+    notifyObservers(this);
   }
   
   /**
