@@ -73,6 +73,22 @@ public class Playlist extends Observable {
   }
   
   /**
+   * Check if the songs list is empty.
+   * 
+   * @return
+   */
+  public boolean isEmpty() {
+    return this.songs.isEmpty();
+  }
+  
+  /**
+   * Clear the songs list.
+   */
+  public void clear() {
+    this.songs.clear();
+  }
+  
+  /**
    * Remove the last song.
    */
   public void removeLast() {

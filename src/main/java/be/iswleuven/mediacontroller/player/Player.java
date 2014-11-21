@@ -23,11 +23,6 @@ public interface Player {
   void next();
   
   /**
-   * Go to the previous song in the playlist.
-   */
-  void previous();
-  
-  /**
    * Skip part of the song.
    * 
    * @param delta
@@ -48,4 +43,10 @@ public interface Player {
    */
   void setVolume(int amount);
   
+  /**
+   * Check if the player is playing.
+   * 
+   * @return
+   */
+  boolean isPlaying();
 }

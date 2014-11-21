@@ -60,7 +60,7 @@ public class MediaController {
     serverHandler = ServerHandler.getInstance();
     pluginHandler = PluginHandler.getInstance();
     commandHandler = CommandHandler.getInstance();
-    VlcPlayer.getInstance();
+    new VlcPlayer();
     
     serverHandler.startAllServers();
   }

@@ -9,7 +9,6 @@ import org.apache.commons.lang.StringUtils;
 import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
 import be.iswleuven.mediacontroller.player.Playlist;
-import be.iswleuven.mediacontroller.player.Song;
 
 import com.google.inject.Inject;
 
@@ -54,15 +53,15 @@ public class PlayCommand extends Command {
    * @return
    * @throws IOException
    */
-  private Song getSong(String query) throws IOException {    
-    Process p = Runtime.getRuntime().exec("python src/main/resources/youtube-dl --skip-download -g -e " + query);
+  private YoutubeSong getSong(String query) throws IOException {    
+    Process p = Runtime.getRuntime()
+        .exec("python src/main/resources/youtube-dl --skip-download -f bestaudio -e " + query);
     
     BufferedReader outputReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
     
     String title = outputReader.readLine();
-    String streamUrl = outputReader.readLine();
     
-    return new Song(title, streamUrl, getWorker().getAddress());
+    return new YoutubeSong(title, query, getWorker().getAddress());
   }
 
 }
