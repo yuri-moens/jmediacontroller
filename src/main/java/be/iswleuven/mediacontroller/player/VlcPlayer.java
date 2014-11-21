@@ -33,12 +33,12 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
     Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
     
     this.player = new MediaPlayerFactory().newHeadlessMediaPlayer();
+    this.player.addMediaPlayerEventListener(this);
   }
   
   @Override
   public void play() {
     this.player.playMedia(this.playlist.getSong().getUrl());
-    this.player.addMediaPlayerEventListener(this);
   }
 
   @Override
