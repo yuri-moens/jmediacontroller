@@ -3,11 +3,13 @@ package be.iswleuven.mediacontroller;
 import java.io.File;
 
 import be.iswleuven.mediacontroller.command.CommandHandler;
-import be.iswleuven.mediacontroller.config.Config;
 import be.iswleuven.mediacontroller.config.ConfigLoader;
-import be.iswleuven.mediacontroller.player.VlcPlayer;
+import be.iswleuven.mediacontroller.player.Player;
 import be.iswleuven.mediacontroller.plugin.PluginHandler;
 import be.iswleuven.mediacontroller.server.ServerHandler;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 public class MediaController {
   
@@ -22,31 +24,6 @@ public class MediaController {
   public static boolean verbose = false;
   
   /**
-   * The configuration.
-   */
-  public static Config config;
-
-  /**
-   * The server handler.
-   */
-  public static ServerHandler serverHandler;
-  
-  /**
-   * The plugin handler.
-   */
-  public static PluginHandler pluginHandler;
-  
-  /**
-   * The command handler.
-   */
-  public static CommandHandler commandHandler;
-  
-  /**
-   * The configuration file.
-   */
-  private static File configFile = new File(System.getProperty("user.home") + "/.mediacontroller/mc.conf");
-  
-  /**
    * Start the mediacontroller.
    * 
    * @param args
@@ -56,13 +33,12 @@ public class MediaController {
       parseArgs(args);
     }
     
-    config = ConfigLoader.load(configFile);
-    serverHandler = ServerHandler.getInstance();
-    pluginHandler = PluginHandler.getInstance();
-    commandHandler = CommandHandler.getInstance();
-    new VlcPlayer();
+    Injector injector = Guice.createInjector(new AppModule());
     
-    serverHandler.startAllServers();
+    injector.getInstance(ServerHandler.class).startAllServers();
+    injector.getInstance(PluginHandler.class);
+    injector.getInstance(CommandHandler.class);
+    injector.getInstance(Player.class);
   }
   
   /**
@@ -80,7 +56,7 @@ public class MediaController {
         
         String path = arg.substring(arg.lastIndexOf("=") + 1);
         path = path.replace("~", System.getProperty("user.home"));
-        configFile = new File(path);
+        ConfigLoader.load(new File(path));
         
         continue;
       }

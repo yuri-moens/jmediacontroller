@@ -6,12 +6,11 @@ import java.util.Queue;
 
 import be.iswleuven.mediacontroller.server.Worker;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
+@Singleton
 public class CommandBus extends Observable {
-  
-  /**
-   * The instance of the command bus.
-   */
-  private static CommandBus commandBus;
 
   /**
    * The commands queue.
@@ -26,22 +25,10 @@ public class CommandBus extends Observable {
   /**
    * Create a new command bus.
    */
-  private CommandBus() {
+  @Inject
+  public CommandBus(CommandFactory commandFactory) {
     commands = new LinkedList<Command>();
-    commandFactory = new CommandFactory();
-  }
-  
-  /**
-   * Get the instance of the command bus. Create it first if it doesn't exist yet.
-   * 
-   * @return
-   */
-  public static CommandBus getInstance() {
-    if (commandBus == null) {
-      commandBus = new CommandBus();
-    }
-    
-    return commandBus;
+    this.commandFactory = commandFactory;
   }
   
   /**

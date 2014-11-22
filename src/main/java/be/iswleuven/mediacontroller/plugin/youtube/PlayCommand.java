@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import be.iswleuven.mediacontroller.MediaController;
 import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
+import be.iswleuven.mediacontroller.config.Config;
 import be.iswleuven.mediacontroller.player.Playlist;
 
 import com.google.api.client.http.HttpRequest;
@@ -29,14 +29,19 @@ public class PlayCommand extends Command {
   /**
    * The YouTube API handler.
    */
-  private static YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
+  private static final YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
     public void initialize(HttpRequest request) throws IOException {}
   }).setApplicationName("youtube-cmdline-search-sample").build();
   
   /**
    * The playlist instance.
    */
-  private Playlist playlist;
+  private final Playlist playlist;
+  
+  /**
+   * The config instance.
+   */
+  private final Config config;
   
   /**
    * Create a new play command.
@@ -44,9 +49,10 @@ public class PlayCommand extends Command {
    * @param plugin
    */
   @Inject
-  public PlayCommand(YoutubePlugin plugin, Playlist playlist) {
+  public PlayCommand(Config config, Playlist playlist, YoutubePlugin plugin) {
     super(plugin);
     this.playlist = playlist;
+    this.config = config;
   }
 
   @Override
@@ -81,7 +87,7 @@ public class PlayCommand extends Command {
     try {
       YouTube.Search.List search = PlayCommand.youtube.search().list("id,snippet");
       
-      search.setKey(MediaController.config.getYoutubeApiKey());
+      search.setKey(this.config.getYoutubeApiKey());
       search.setQ(query);
       search.setType("video");
       search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");

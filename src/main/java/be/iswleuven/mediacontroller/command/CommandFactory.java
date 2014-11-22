@@ -6,10 +6,32 @@ import be.iswleuven.mediacontroller.plugin.Plugin;
 import be.iswleuven.mediacontroller.plugin.PluginHandler;
 import be.iswleuven.mediacontroller.server.Worker;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 public class CommandFactory {
 
+  /**
+   * The app injector.
+   */
+  private final Injector injector;
+  
+  /**
+   * The plugin handler instance.
+   */
+  private final PluginHandler pluginHandler;
+  
+  /**
+   * Create a new command factory.
+   * 
+   * @param pluginHandler
+   */
+  @Inject
+  public CommandFactory(Injector injector, PluginHandler pluginHandler) {
+    this.injector = injector;
+    this.pluginHandler = pluginHandler;
+  }
+  
   /**
    * Create a command from the given raw command string.
    * 
@@ -47,20 +69,8 @@ public class CommandFactory {
         throw new NoParameterException();
       }
     }
-
-    Injector injector = null;
     
-    try {
-      injector = (Injector) commandClass.getDeclaredField("injector").get(null);
-    } catch (Exception e) {
-      try {
-        injector = (Injector) Command.class.getDeclaredField("injector").get(null);
-      } catch (Exception e1) {
-        e1.printStackTrace();
-      } 
-    }
-    
-    Command command = injector.getInstance(commandClass);
+    Command command = this.injector.getInstance(commandClass);
     
     command.setParameters(parameters);
     
@@ -117,7 +127,7 @@ public class CommandFactory {
    * @return
    */
   private Plugin getPlugin(String pluginNamespace) {
-    Map<String, Plugin> plugins = PluginHandler.getInstance().getPlugins();
+    Map<String, Plugin> plugins = this.pluginHandler.getPlugins();
 
     return plugins.get(pluginNamespace) == null ? plugins.get("default") : plugins.get(pluginNamespace);
   }

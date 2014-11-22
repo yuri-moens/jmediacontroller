@@ -3,12 +3,11 @@ package be.iswleuven.mediacontroller.command;
 import java.util.Observable;
 import java.util.Observer;
 
-public class CommandHandler implements Observer {
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
-  /**
-   * The instance of the command handler.
-   */
-  private static CommandHandler commandHandler;
+@Singleton
+public class CommandHandler implements Observer {
   
   /**
    * The instance of the command bus.
@@ -20,23 +19,11 @@ public class CommandHandler implements Observer {
    * 
    * @param commandBus
    */
-  private CommandHandler(CommandBus commandBus) {
+  @Inject
+  public CommandHandler(CommandBus commandBus) {
     this.commandBus = commandBus;
     
     this.commandBus.addObserver(this);
-  }
-  
-  /**
-   * Get the command handler instance.
-   * 
-   * @return
-   */
-  public static CommandHandler getInstance() {
-    if (commandHandler == null) {
-      commandHandler = new CommandHandler(CommandBus.getInstance());
-    }
-    
-    return commandHandler;
   }
 
   @Override

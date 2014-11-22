@@ -3,12 +3,11 @@ package be.iswleuven.mediacontroller.player;
 import java.util.LinkedList;
 import java.util.Observable;
 
-public class Playlist extends Observable {
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
-  /**
-   * The playlist instance.
-   */
-  private static Playlist playlist;
+@Singleton
+public class Playlist extends Observable {
   
   /**
    * The songs queue.
@@ -18,16 +17,9 @@ public class Playlist extends Observable {
   /**
    * Create a new playlist.
    */
-  private Playlist() {
+  @Inject
+  public Playlist() {
     songs = new LinkedList<Song>();
-  }
-  
-  public static Playlist getInstance() {
-    if (Playlist.playlist == null) {
-      Playlist.playlist = new Playlist();
-    }
-    
-    return Playlist.playlist;
   }
   
   /**

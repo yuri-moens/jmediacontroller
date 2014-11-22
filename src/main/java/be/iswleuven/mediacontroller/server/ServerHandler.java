@@ -4,40 +4,32 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
-import be.iswleuven.mediacontroller.MediaController;
 import be.iswleuven.mediacontroller.command.CommandBus;
+import be.iswleuven.mediacontroller.config.Config;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
+@Singleton
 public class ServerHandler {
-
-  /**
-   * The server handler instance.
-   */
-  private static ServerHandler serverHandler;
 
   /**
    * Map with the servers and their name.
    */
   private Map<String, Server> servers;
   
+  private CommandBus commandBus;
+  
   /**
    * Create a new server handler.
    */
-  private ServerHandler() {
-    servers = new HashMap<String, Server>();
-    addServers(MediaController.config.getServers());
-  }
-  
-  /**
-   * Get the instance of the server handler. Create it first if it doesn't exist yet.
-   * 
-   * @return
-   */
-  public static ServerHandler getInstance() {
-    if (serverHandler == null) {
-      serverHandler = new ServerHandler();
-    }
+  @Inject
+  public ServerHandler(CommandBus commandBus, Config config) {
+    this.commandBus = commandBus;
     
-    return serverHandler;
+    servers = new HashMap<String, Server>();
+    
+    addServers(config.getServers());
   }
   
   /**
@@ -55,8 +47,6 @@ public class ServerHandler {
    * @param servers
    */
   public void addServers(String[] servers) {
-    CommandBus commandBus = CommandBus.getInstance();
-
     for (String server : servers) {
       try {
         String name = server.split(":")[0];
@@ -67,7 +57,7 @@ public class ServerHandler {
         Class<?>[] types = {CommandBus.class, Integer.TYPE};
         Constructor<?> constructor = serverClass.getConstructor(types);
         
-        Server serverInstance = (Server) constructor.newInstance(commandBus, port);
+        Server serverInstance = (Server) constructor.newInstance(this.commandBus, port);
         
         this.servers.put(name, serverInstance);
       } catch (Exception e) {

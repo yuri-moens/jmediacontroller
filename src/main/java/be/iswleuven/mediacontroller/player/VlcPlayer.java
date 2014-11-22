@@ -9,8 +9,11 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.sun.jna.Native;
 
+@Singleton
 public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Player {
   
   /**
@@ -26,9 +29,10 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   /**
    * Create a new VLC player.
    */
-  public VlcPlayer() {
-    playlist = Playlist.getInstance();
-    playlist.addObserver(this);
+  @Inject
+  public VlcPlayer(Playlist playlist) {
+    this.playlist = playlist;
+    this.playlist.addObserver(this);
 
     Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
     

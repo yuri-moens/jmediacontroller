@@ -11,13 +11,31 @@ import be.iswleuven.mediacontroller.MediaController;
 public class ConfigLoader {
 
   /**
+   * The config instance.
+   */
+  private static Config config;
+  
+  /**
+   * Get the config.
+   * 
+   * @return
+   */
+  public static Config getConfig() {
+    if (ConfigLoader.config == null) {
+      ConfigLoader.load(new File(System.getProperty("user.home") + "/.mediacontroller/mc.conf"));
+    }
+    
+    return ConfigLoader.config;
+  }
+  
+  /**
    * Attempt to load in the given configuration file. If the file is not found it will create a new file with
    * sane defaults.
    * 
    * @param configFile
    * @return
    */
-  public static Config load(File configFile) {
+  public static void load(File configFile) {
     Properties properties = new Properties();
     Config config;
     
@@ -34,7 +52,7 @@ public class ConfigLoader {
       save(config, configFile);
     }
     
-    return config;
+    ConfigLoader.config = config;
   }
   
   /**

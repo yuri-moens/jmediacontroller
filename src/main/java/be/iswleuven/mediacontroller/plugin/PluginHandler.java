@@ -6,17 +6,15 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import be.iswleuven.mediacontroller.MediaController;
+import be.iswleuven.mediacontroller.config.Config;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.metapossum.utils.scanner.ResourceNameFilter;
 import com.metapossum.utils.scanner.reflect.ClassesInPackageScanner;
 
+@Singleton
 public class PluginHandler {
-
-  /**
-   * The plugin handler instance.
-   */
-  private static PluginHandler pluginHandler;
   
   /**
    * Map with the plugins and their command namespace.
@@ -26,22 +24,10 @@ public class PluginHandler {
   /**
    * Create a new plugin handler.
    */
-  private PluginHandler() {
+  @Inject
+  public PluginHandler(Config config) {
     plugins = new HashMap<String, Plugin>();
-    addPlugins(MediaController.config.getPlugins());
-  }
-  
-  /**
-   * Get the instance of the plugin handler. Create it first if it doesn't exist yet.
-   * 
-   * @return
-   */
-  public static PluginHandler getInstance() {
-    if (pluginHandler == null) {
-      pluginHandler = new PluginHandler();
-    }
-    
-    return pluginHandler;
+    addPlugins(config.getPlugins());
   }
   
   /**
