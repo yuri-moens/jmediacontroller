@@ -73,7 +73,7 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
 
   @Override
   public void setVolume(int amount) {
-    amount = Math.abs(amount) % 101;
+    amount = Math.abs(amount) > 100 ? 100 : Math.abs(amount);
     
     this.player.setVolume(amount);
   }
