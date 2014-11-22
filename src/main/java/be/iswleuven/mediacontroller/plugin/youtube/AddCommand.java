@@ -19,7 +19,7 @@ import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.inject.Inject;
 
-public class PlayCommand extends Command {
+public class AddCommand extends Command {
 
   /**
    * The command string.
@@ -49,7 +49,7 @@ public class PlayCommand extends Command {
    * @param plugin
    */
   @Inject
-  public PlayCommand(Config config, Playlist playlist, YoutubePlugin plugin) {
+  public AddCommand(Config config, Playlist playlist, YoutubePlugin plugin) {
     super(plugin);
     this.playlist = playlist;
     this.config = config;
@@ -85,7 +85,7 @@ public class PlayCommand extends Command {
     String[] url = new String[2];
     
     try {
-      YouTube.Search.List search = PlayCommand.youtube.search().list("id,snippet");
+      YouTube.Search.List search = AddCommand.youtube.search().list("id,snippet");
       
       search.setKey(this.config.getYoutubeApiKey());
       search.setQ(query);
