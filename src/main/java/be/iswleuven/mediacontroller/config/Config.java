@@ -51,6 +51,14 @@ public class Config {
   public String[] getPlugins() {
     return properties.getProperty("plugins").split(",");
   }
+
+  /**
+   * Get the Youtube API key.
+   * @return
+   */
+  public String getYoutubeApiKey() {
+    return properties.getProperty("YoutubeApiKey");
+  }
   
   /**
    * Get default properties.
