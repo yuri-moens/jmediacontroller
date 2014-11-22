@@ -16,6 +16,7 @@ public class StandardPlugin extends Plugin {
   @Override
   public void initializeCommands() {
     registerCommand(HelpCommand.class);
+    registerCommand(PauseCommand.class);
     registerCommand(StopCommand.class);
   }
   
