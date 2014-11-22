@@ -62,6 +62,8 @@ public class Config {
     
     properties.setProperty("servers", "SocketServer:3333");
     properties.setProperty("plugins", "StandardPlugin,AdminPlugin,YoutubePlugin");
+    properties.setProperty("player", "VlcPlayer");
+    properties.setProperty("YoutubeApiKey", "");
     
     return properties;
   }
