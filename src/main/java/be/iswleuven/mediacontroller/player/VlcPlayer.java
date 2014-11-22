@@ -97,4 +97,11 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
     }
   }
   
+  @Override
+  public void stopped(MediaPlayer player) {
+    if (! this.playlist.isEmpty()) {
+      this.play();
+    }
+  }
+  
 }
