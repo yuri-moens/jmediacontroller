@@ -65,6 +65,11 @@
     	<artifactId>vlcj</artifactId>
     	<version>3.0.0</version>
     </dependency>
+    <dependency>
+    	<groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-youtube</artifactId>
+        <version>v3-rev122-1.19.0</version>
+    </dependency>
   </dependencies>
   <organization>
   	<name>Informatica Studentenwerking</name>
