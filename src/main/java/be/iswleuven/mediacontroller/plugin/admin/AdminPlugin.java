@@ -9,8 +9,6 @@ public class AdminPlugin extends Plugin {
    */
   public AdminPlugin() {
     super("AdminPlugin", "1.0", "admin", "Yuri Moens");
-    
-    initializeCommands();
   }
 
   @Override

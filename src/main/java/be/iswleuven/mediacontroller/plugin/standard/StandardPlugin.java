@@ -9,8 +9,6 @@ public class StandardPlugin extends Plugin {
    */
   public StandardPlugin() {
     super("StandardPlugin", "1.0", "default", "Yuri Moens");
-    
-    initializeCommands();
   }
 
   @Override

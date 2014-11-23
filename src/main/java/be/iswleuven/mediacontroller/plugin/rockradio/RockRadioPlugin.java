@@ -9,8 +9,6 @@ public class RockRadioPlugin extends Plugin {
    */
   public RockRadioPlugin() {
     super("RockRadio", "1.0", "rr", "Yuri Moens");
-    
-    initializeCommands();
   }
 
   @Override

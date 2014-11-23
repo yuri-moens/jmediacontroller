@@ -48,6 +48,8 @@ public abstract class Plugin {
     this.commandNamespace = commandNamespace;
     this.authors = authors;
     this.commands = new HashMap<String, Class<? extends Command>>();
+    
+    initializeCommands();
   }
   
   /**
