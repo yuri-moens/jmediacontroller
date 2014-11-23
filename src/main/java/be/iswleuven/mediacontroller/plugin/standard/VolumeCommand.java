@@ -14,6 +14,11 @@ public class VolumeCommand extends Command {
   public static String COMMAND_STRING = "volume";
   
   /**
+   * Command aliases.
+   */
+  public static String[] COMMAND_ALIASES = { "vol" };
+  
+  /**
    * The player instance.
    */
   private final Player player;

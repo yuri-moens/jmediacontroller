@@ -116,6 +116,15 @@ public abstract class Plugin {
       Field field = commandClass.getDeclaredField("COMMAND_STRING");
       String command = (String) field.get(null);
       
+      try {
+        field = commandClass.getDeclaredField("COMMAND_ALIASES");
+        String[] aliases = (String[]) field.get(null);
+        
+        for (String alias : aliases) {
+          commands.put(alias, commandClass);
+        }
+      } catch (Exception e) {}
+      
       commands.put(command, commandClass);
     } catch (NoSuchFieldException e) {
       if (MediaController.verbose) {
