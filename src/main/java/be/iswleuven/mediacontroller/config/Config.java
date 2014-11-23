@@ -69,7 +69,7 @@ public class Config {
     Properties properties = new Properties();
     
     properties.setProperty("servers", "SocketServer:3333");
-    properties.setProperty("plugins", "StandardPlugin,AdminPlugin,YoutubePlugin");
+    properties.setProperty("plugins", "StandardPlugin,AdminPlugin,YoutubePlugin,RockRadioPlugin");
     properties.setProperty("player", "VlcPlayer");
     properties.setProperty("YoutubeApiKey", "");
     
