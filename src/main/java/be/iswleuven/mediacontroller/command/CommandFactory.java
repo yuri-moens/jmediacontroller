@@ -41,6 +41,10 @@ public class CommandFactory {
    * @throws CommandException
    */
   public Command createCommand(String rawCommand, Worker worker) throws CommandException {
+    if (rawCommand.startsWith("+") || rawCommand.startsWith("-")) {
+      rawCommand = rawCommand.substring(0, 1) + " " + rawCommand.substring(1, rawCommand.length());
+    }
+    
     String[] rawCommandArray = rawCommand.split(" ");
     
     Plugin plugin = getPlugin(rawCommandArray[0]);
