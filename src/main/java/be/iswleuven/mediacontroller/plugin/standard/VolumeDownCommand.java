@@ -4,6 +4,8 @@ import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
 import be.iswleuven.mediacontroller.player.Player;
 
+import com.google.inject.Inject;
+
 public class VolumeDownCommand extends Command {
 
   /**
@@ -22,6 +24,7 @@ public class VolumeDownCommand extends Command {
    * @param player
    * @param plugin
    */
+  @Inject
   public VolumeDownCommand(Player player, StandardPlugin plugin) {
     super(plugin);
     this.player = player;

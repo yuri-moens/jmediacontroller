@@ -20,6 +20,8 @@ public class StandardPlugin extends Plugin {
     registerCommand(PauseCommand.class);
     registerCommand(StopCommand.class);
     registerCommand(VolumeCommand.class);
+    registerCommand(VolumeDownCommand.class);
+    registerCommand(VolumeUpCommand.class);
   }
   
 }
