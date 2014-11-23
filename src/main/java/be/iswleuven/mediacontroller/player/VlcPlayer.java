@@ -27,6 +27,11 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   private final MediaPlayer player;
   
   /**
+   * The currently playing song.
+   */
+  private Song currentSong;
+  
+  /**
    * Create a new VLC player.
    */
   @Inject
@@ -42,7 +47,8 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   
   @Override
   public void play() {
-    this.player.playMedia(this.playlist.getSong().getUrl());
+    this.currentSong = this.playlist.getSong();
+    this.player.playMedia(this.currentSong.getUrl());
   }
 
   @Override
@@ -64,6 +70,20 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   @Override
   public void skip(long delta) {
     this.player.skip(delta);
+  }
+
+  @Override
+  public String getCurrent() {
+    if (isPlaying()) {
+      return this.currentSong.getTitle();
+    } else {
+      return null;
+    }
+  }
+
+  @Override
+  public int getVolume() {
+    return this.player.getVolume();
   }
 
   @Override
@@ -92,6 +112,7 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   
   @Override
   public void finished(MediaPlayer player) {
+    this.currentSong = null;
     if (! this.playlist.isEmpty()) {
       this.play(); 
     }
@@ -99,6 +120,7 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   
   @Override
   public void stopped(MediaPlayer player) {
+    this.currentSong = null;
     if (! this.playlist.isEmpty()) {
       this.play();
     }

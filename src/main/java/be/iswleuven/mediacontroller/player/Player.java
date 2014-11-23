@@ -30,14 +30,28 @@ public interface Player {
   void skip(long delta);
   
   /**
-   * Change the volume by the given amount.
+   * Get the current playing song.
+   * 
+   * @return
+   */
+  String getCurrent();
+  
+  /**
+   * Get the volume level.
+   * 
+   * @return
+   */
+  int getVolume();
+  
+  /**
+   * Change the volume level by the given amount.
    * 
    * @param amount
    */
   void changeVolume(int amount);
   
   /**
-   * Set the volume to the given amount.
+   * Set the volume level to the given amount.
    * 
    * @param amount
    */
