@@ -131,8 +131,8 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   }
   
   @Override
-  public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
-    mediaPlayer.parseMedia();
+  public void mediaMetaChanged(MediaPlayer player, int metaType) {
+    player.parseMedia();
   }
   
 }
