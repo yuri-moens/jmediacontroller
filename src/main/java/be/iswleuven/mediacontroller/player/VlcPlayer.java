@@ -56,7 +56,6 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   
   @Override
   public void play() {
-    this.currentSong = this.playlist.getSong();
     this.player.playMedia(this.currentSong.getUrl());
   }
 
@@ -68,17 +67,26 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   @Override
   public void stop() {
     this.playlist.clear();
+    this.currentSong = null;
     this.player.stop();
   }
 
   @Override
   public void next() {
+    this.currentSong = this.playlist.getNext();
     this.player.stop();
   }
   
   @Override
   public void previous() {
-    
+    this.currentSong = this.playlist.getPrevious();
+    this.player.stop();
+  }
+  
+  @Override
+  public void playAtPosition(int position) {
+    this.currentSong = this.playlist.getAtPosition(position);
+    this.player.stop();
   }
 
   @Override
@@ -124,6 +132,7 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   @Override
   public void update(Observable obs, Object o) {
     if (! isPlaying()) {
+      this.currentSong = this.playlist.getNext();
       play();
     }
   }
@@ -132,14 +141,14 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   public void finished(MediaPlayer player) {
     this.currentSong = null;
     if (! this.playlist.isEmpty()) {
+      this.currentSong = this.playlist.getNext();
       this.play(); 
     }
   }
   
   @Override
   public void stopped(MediaPlayer player) {
-    this.currentSong = null;
-    if (! this.playlist.isEmpty()) {
+    if (this.currentSong != null) {
       this.play();
     }
   }

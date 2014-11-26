@@ -6,53 +6,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Deque;
-import java.util.LinkedList;
 
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
 public class History {
   
   /**
-   * The maximum history size.
-   */
-  private final int MAX_HISTORY_SIZE;
-  
-  /**
-   * The list of songs in the history.
-   */
-  private Deque<Song> history;
-  
-  @Inject
-  public History() {
-    this.history = new LinkedList<Song>();
-
-    this.MAX_HISTORY_SIZE = 2;
-  }
-  
-  /**
-   * Add the song to the history.
+   * Add the song to the history file.
    * 
    * @param song
    */
   public void add(Song song) {
-    if (this.history.size() == this.MAX_HISTORY_SIZE) {
-      this.history.removeFirst();
-    }
-    
-    writeToFile(song);
-    
-    this.history.add(song);
-  }
-  
-  /**
-   * Write the given song to a history log file.
-   * 
-   * @param song
-   */
-  private void writeToFile(Song song) {
     String filename = getYearAndMonth() + ".log";
     
     File file = new File(System.getProperty("user.home") + "/.mediacontroller/history/" + filename);

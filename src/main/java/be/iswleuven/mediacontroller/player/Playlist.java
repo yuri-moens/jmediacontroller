@@ -1,8 +1,9 @@
 package be.iswleuven.mediacontroller.player;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Observable;
+
+import be.iswleuven.mediacontroller.config.Config;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -11,22 +12,33 @@ import com.google.inject.Singleton;
 public class Playlist extends Observable {
   
   /**
-   * The songs queue.
+   * The maximum history size.
    */
-  private Deque<Song> songs;
+  private final int MAX_HISTORY_SIZE;
   
   /**
-   * The history of the playlist.
+   * The songs queue.
    */
-  private History history;
+  private ArrayList<Song> songs;
+  
+  /**
+   * The playlist history.
+   */
+  private final History history;
+  
+  /**
+   * The number that points to the index of the current playing file.
+   */
+  private int position = -1;
   
   /**
    * Create a new playlist.
    */
   @Inject
-  public Playlist(History history) {
+  public Playlist(Config config, History history) {
+    this.MAX_HISTORY_SIZE = config.getMaxHistorySize();
     this.history = history;
-    songs = new LinkedList<Song>();
+    this.songs = new ArrayList<Song>();
   }
   
   /**
@@ -46,12 +58,61 @@ public class Playlist extends Observable {
    * 
    * @return
    */
-  public Song getSong() {
-    Song song = this.songs.poll();
+  public Song getNext() {
+    Song song = null;
     
-    history.add(song);
+    if (this.position == this.MAX_HISTORY_SIZE) {
+      this.songs.remove(0);
+      
+      song = this.songs.get(this.position);
+    } else {
+      song = this.songs.get(++this.position);
+    }
+    
+    this.history.add(song);
     
     return song;
+  }
+  
+  /**
+   * Get the previous song.
+   * 
+   * @return
+   */
+  public Song getPrevious() {
+    Song song = null;
+    
+    if (this.position != 0) {
+      song = this.songs.get(--this.position);
+    }
+    
+    this.history.add(song);
+    
+    return song;
+  }
+  
+  /**
+   * Get the song at the given position.
+   * 
+   * @param position
+   * @return
+   */
+  public Song getAtPosition(int position) {    
+    if (position >= 0 && position < this.songs.size()) {
+      if (position > this.MAX_HISTORY_SIZE) {
+        int delta = position - this.MAX_HISTORY_SIZE;
+        
+        for (int i = 0; i < delta; i++) {
+          this.songs.remove(0);
+        }
+        
+        this.position = this.MAX_HISTORY_SIZE;
+      } else {
+        this.position = position;
+      }
+    }
+    
+    return this.songs.get(this.position);
   }
   
   /**
@@ -68,6 +129,7 @@ public class Playlist extends Observable {
    */
   public void clear() {
     this.songs.clear();
+    this.position = -1;
   }
   
   /**
@@ -83,8 +145,8 @@ public class Playlist extends Observable {
    * @param amount
    */
   public void removeLast(int amount) {
-    for (int i = 0; i < amount; i++) {
-      this.songs.removeLast();      
+    for (int i = 0; i < amount && this.songs.size() > 0; i++) {
+      this.songs.remove(this.songs.size() - 1);     
     }
   }
   

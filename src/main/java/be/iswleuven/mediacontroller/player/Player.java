@@ -68,4 +68,11 @@ public interface Player {
    * @return
    */
   boolean isPlaying();
+
+  /**
+   * Play the song at the given position in the playlist.
+   * 
+   * @param parseInt
+   */
+  void playAtPosition(int parseInt);
 }
