@@ -22,22 +22,21 @@ public class Playlist extends Observable {
   private ArrayList<Song> songs;
   
   /**
-   * The playlist history.
+   * The number that points to the index of the current playing song.
    */
-  private final History history;
+  private int position = 0;
   
   /**
-   * The number that points to the index of the current playing file.
+   * Flag indicating if the current song should be skipped.
    */
-  private int position = -1;
+  private boolean skipCurrent;
   
   /**
    * Create a new playlist.
    */
   @Inject
-  public Playlist(Config config, History history) {
+  public Playlist(Config config) {
     this.MAX_HISTORY_SIZE = config.getMaxHistorySize();
-    this.history = history;
     this.songs = new ArrayList<Song>();
   }
   
@@ -48,56 +47,33 @@ public class Playlist extends Observable {
    */
   public void addSong(Song song) {
     this.songs.add(song);
-
+    
     setChanged();
     notifyObservers(this);
   }
   
   /**
-   * Get the next song.
+   * Get the song at the current position.
    * 
    * @return
    */
-  public Song getNext() {
-    Song song = null;
-    
-    if (this.position == this.MAX_HISTORY_SIZE) {
-      this.songs.remove(0);
-      
-      song = this.songs.get(this.position);
+  public Song getSong() {
+    System.out.println(this.position);
+    if (this.songs.size() == this.position) {
+      this.position--;
+
+      return null;
     } else {
-      song = this.songs.get(++this.position);
+      return this.songs.get(this.position);
     }
-    
-    this.history.add(song);
-    
-    return song;
   }
   
   /**
-   * Get the previous song.
-   * 
-   * @return
-   */
-  public Song getPrevious() {
-    Song song = null;
-    
-    if (this.position != 0) {
-      song = this.songs.get(--this.position);
-    }
-    
-    this.history.add(song);
-    
-    return song;
-  }
-  
-  /**
-   * Get the song at the given position.
+   * Set the playlist position.
    * 
    * @param position
-   * @return
    */
-  public Song getAtPosition(int position) {    
+  public void setPosition(int position) {
     if (position >= 0 && position < this.songs.size()) {
       if (position > this.MAX_HISTORY_SIZE) {
         int delta = position - this.MAX_HISTORY_SIZE;
@@ -112,7 +88,50 @@ public class Playlist extends Observable {
       }
     }
     
-    return this.songs.get(this.position);
+    setChanged();
+    notifyObservers(this);
+  }
+  
+  /**
+   * Set the position to the next song.
+   */
+  public void nextSong() {
+    if (this.position == this.MAX_HISTORY_SIZE) {
+      this.songs.remove(0);
+    } else {
+      this.position++;
+    }
+    
+    setChanged();
+    notifyObservers(this);
+  }
+
+  /**
+   * Set the position to the previous song.
+   */
+  public void previousSong() {
+    if (this.position != 0) {
+      this.position--;
+    }
+    
+    setChanged();
+    notifyObservers(this);
+  }
+  
+  /**
+   * Return true if the current playing song should be skipped.
+   * 
+   * @return
+   */
+  public boolean shouldSkipCurrent() {
+    return this.skipCurrent;
+  }
+  
+  /**
+   * Toggle the skip current flag.
+   */
+  public void toggleSkipCurrent() {
+    this.skipCurrent = !this.skipCurrent;
   }
   
   /**
@@ -129,7 +148,7 @@ public class Playlist extends Observable {
    */
   public void clear() {
     this.songs.clear();
-    this.position = -1;
+    this.position = 0;
   }
   
   /**

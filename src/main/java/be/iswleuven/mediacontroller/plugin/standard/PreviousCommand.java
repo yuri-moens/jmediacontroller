@@ -2,7 +2,7 @@ package be.iswleuven.mediacontroller.plugin.standard;
 
 import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
-import be.iswleuven.mediacontroller.player.Player;
+import be.iswleuven.mediacontroller.player.Playlist;
 
 import com.google.inject.Inject;
 
@@ -14,25 +14,26 @@ public class PreviousCommand extends Command {
   public static String COMMAND_STRING = "previous";
   
   /**
-   * The player instance.
+   * The playlist instance.
    */
-  private final Player player;
+  private final Playlist playlist;
   
   /**
    * Create a new previous command.
    * 
-   * @param player
+   * @param playlist
    * @param plugin
    */
   @Inject
-  public PreviousCommand(Player player, StandardPlugin plugin) {
+  public PreviousCommand(Playlist playlist, StandardPlugin plugin) {
     super(plugin);
-    this.player = player;
+    this.playlist = playlist;
   }
 
   @Override
   public void execute() throws CommandException {
-    this.player.previous();
+    this.playlist.toggleSkipCurrent();
+    this.playlist.previousSong();
   }
 
 }

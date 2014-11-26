@@ -32,7 +32,7 @@ public class CurrentCommand extends Command {
 
   @Override
   public void execute() throws CommandException {
-    setMessage(this.player.getCurrent());
+    setMessage(this.player.getCurrentlyPlaying());
     
     notifyWorker();
   }

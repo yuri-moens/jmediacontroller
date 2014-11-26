@@ -1,78 +1,164 @@
 package be.iswleuven.mediacontroller.player;
 
-public interface Player {
+import java.util.Observer;
+
+public abstract class Player implements Observer {
 
   /**
-   * Start playing.
+   * Flag to indicate if the player is currently playing.
    */
-  void play();
+  private boolean playing;
   
   /**
-   * Pause playing.
+   * Flag to indicate if the player is currently paused.
    */
-  void pause();
+  private boolean paused;
   
   /**
-   * Stop playing.
+   * The history instance.
    */
-  void stop();
+  private final History history;
   
   /**
-   * Go to the next song in the playlist.
+   * The playlist of this player.
    */
-  void next();
+  private final Playlist playlist;
   
   /**
-   * Go to the previous song in the history.
+   * The current playing song.
    */
-  void previous();
+  private Song currentSong;
   
   /**
-   * Skip part of the song.
+   * Create a new player.
    * 
-   * @param delta
+   * @param history
+   * @param playlist
    */
-  void skip(long delta);
-  
-  /**
-   * Get the current playing song.
-   * 
-   * @return
-   */
-  String getCurrent();
-  
-  /**
-   * Get the volume level.
-   * 
-   * @return
-   */
-  int getVolume();
-  
-  /**
-   * Change the volume level by the given amount.
-   * 
-   * @param amount
-   */
-  void changeVolume(int amount);
-  
-  /**
-   * Set the volume level to the given amount.
-   * 
-   * @param amount
-   */
-  void setVolume(int amount);
+  public Player(History history, Playlist playlist) {
+    this.history = history;
+    this.playlist = playlist;
+    this.playlist.addObserver(this);
+  }
   
   /**
    * Check if the player is playing.
    * 
    * @return
    */
-  boolean isPlaying();
-
+  public boolean isPlaying() {
+    return this.playing;
+  }
+  
   /**
-   * Play the song at the given position in the playlist.
+   * Set the playing flag.
    * 
-   * @param parseInt
+   * @param playing
    */
-  void playAtPosition(int parseInt);
+  public void setPlaying(boolean playing) {
+    this.playing = playing;
+  }
+  
+  /**
+   * Check if the player is paused.
+   * 
+   * @return
+   */
+  public boolean isPaused() {
+    return this.paused;
+  }
+  
+  /**
+   * Set the paused flag.
+   * 
+   * @param paused
+   */
+  public void setPaused(boolean paused) {
+    this.paused = paused;
+  }
+  
+  /**
+   * Get the playlist of this player.
+   * 
+   * @return
+   */
+  public Playlist getPlaylist() {
+    return this.playlist;
+  }
+  
+  /**
+   * Get the current playing song.
+   * 
+   * @return
+   */
+  public Song getCurrentSong() {
+    return this.currentSong;
+  }
+  
+  /**
+   * Set the current playing song.
+   */
+  public void setCurrentSong(Song song) {
+    this.currentSong = song;
+  }
+  
+  /**
+   * Get the player history.
+   * 
+   * @return
+   */
+  public History getHistory() {
+    return this.history;
+  }
+  
+  /**
+   * Start playing.
+   */
+  public abstract void play();
+  
+  /**
+   * Pause playing.
+   */
+  public abstract void pause();
+  
+  /**
+   * Stop playing.
+   */
+  public abstract void stop();
+  
+  /**
+   * Skip part of the song.
+   * 
+   * @param delta
+   */
+  public abstract void skip(long delta);
+  
+  /**
+   * Get the current playing song title.
+   * 
+   * @return
+   */
+  public abstract String getCurrentlyPlaying();
+  
+  /**
+   * Get the volume level.
+   * 
+   * @return
+   */
+  public abstract int getVolume();
+  
+  /**
+   * Change the volume level by the given amount.
+   * 
+   * @param amount
+   */
+  public abstract void changeVolume(int amount);
+  
+  /**
+   * Set the volume level to the given amount.
+   * 
+   * @param amount
+   */
+  public abstract void setVolume(int amount);
+  
 }

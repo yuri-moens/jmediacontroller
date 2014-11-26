@@ -2,7 +2,7 @@ package be.iswleuven.mediacontroller.plugin.standard;
 
 import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
-import be.iswleuven.mediacontroller.player.Player;
+import be.iswleuven.mediacontroller.player.Playlist;
 
 import com.google.inject.Inject;
 
@@ -14,27 +14,29 @@ public class PositionCommand extends Command {
   public static String COMMAND_STRING = "position";
   
   /**
-   * The player instance.
+   * The playlist instance.
    */
-  private final Player player;
+  private final Playlist playlist;
   
   /**
    * Create a new position command.
    * 
-   * @param player
+   * @param playlist
    * @param plugin
    */
   @Inject
-  public PositionCommand(Player player, StandardPlugin plugin) {
+  public PositionCommand(Playlist playlist, StandardPlugin plugin) {
     super(plugin);
-    this.player = player;
+    this.playlist = playlist;
   }
 
   @Override
   public void execute() throws CommandException {
     try {
-      this.player.playAtPosition(Integer.parseInt(getParameters()[0]) - 1);
+      this.playlist.toggleSkipCurrent();
+      this.playlist.setPosition(Integer.parseInt(getParameters()[0]) - 1);
     } catch (Exception e) {
+      this.playlist.toggleSkipCurrent();
       throw new CommandException("Positie moet een getal zijn.");
     }
   }
