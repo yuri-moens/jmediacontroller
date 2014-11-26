@@ -1,5 +1,6 @@
 package be.iswleuven.mediacontroller.player;
 
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Observable;
 
@@ -12,23 +13,20 @@ public class Playlist extends Observable {
   /**
    * The songs queue.
    */
-  private LinkedList<Song> songs;
+  private Deque<Song> songs;
+  
+  /**
+   * The history of the playlist.
+   */
+  private History history;
   
   /**
    * Create a new playlist.
    */
   @Inject
-  public Playlist() {
+  public Playlist(History history) {
+    this.history = history;
     songs = new LinkedList<Song>();
-  }
-  
-  /**
-   * Get the songs in the playlist.
-   * 
-   * @return
-   */
-  public LinkedList<Song> getSongs() {
-    return this.songs;
   }
   
   /**
@@ -44,24 +42,16 @@ public class Playlist extends Observable {
   }
   
   /**
-   * Add the contents of a different playlist to this playlist.
-   * 
-   * @param playlist
-   */
-  public void addPlaylist(Playlist playlist) {
-    this.songs.addAll(playlist.getSongs());
-    
-    setChanged();
-    notifyObservers(this);
-  }
-  
-  /**
    * Get the next song.
    * 
    * @return
    */
   public Song getSong() {
-    return this.songs.poll();
+    Song song = this.songs.poll();
+    
+    history.add(song);
+    
+    return song;
   }
   
   /**

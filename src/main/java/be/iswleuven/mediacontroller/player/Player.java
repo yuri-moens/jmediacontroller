@@ -23,6 +23,11 @@ public interface Player {
   void next();
   
   /**
+   * Go to the previous song in the history.
+   */
+  void previous();
+  
+  /**
    * Skip part of the song.
    * 
    * @param delta

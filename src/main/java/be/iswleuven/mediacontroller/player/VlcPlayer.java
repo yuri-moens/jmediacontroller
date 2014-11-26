@@ -75,6 +75,11 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   public void next() {
     this.player.stop();
   }
+  
+  @Override
+  public void previous() {
+    
+  }
 
   @Override
   public void skip(long delta) {
