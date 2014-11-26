@@ -75,9 +75,13 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
   @Override
   public String getCurrent() {
     if (isPlaying()) {
-      return this.currentSong.getTitle();
+      if (this.player.getMediaMeta().getNowPlaying() == null) {
+        return this.currentSong.getTitle();
+      } else {
+        return this.player.getMediaMeta().getNowPlaying();
+      }
     } else {
-      return null;
+      return "Niet aan het spelen";
     }
   }
 
@@ -124,6 +128,11 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
     if (! this.playlist.isEmpty()) {
       this.play();
     }
+  }
+  
+  @Override
+  public void mediaMetaChanged(MediaPlayer mediaPlayer, int metaType) {
+    mediaPlayer.parseMedia();
   }
   
 }
