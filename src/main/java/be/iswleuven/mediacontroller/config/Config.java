@@ -51,6 +51,24 @@ public class Config {
   public String[] getPlugins() {
     return properties.getProperty("plugins").split(",");
   }
+  
+  /**
+   * Get the maximum history size.
+   * 
+   * @return
+   */
+  public int getMaxHistorySize() {
+    return Integer.parseInt(properties.getProperty("maxHistorySize"));
+  }
+  
+  /**
+   * Get the location of the VLC library.
+   * 
+   * @return
+   */
+  public String getVlcLocation() {
+    return properties.getProperty("vlcLocation");
+  }
 
   /**
    * Get the Youtube API key.
@@ -71,7 +89,9 @@ public class Config {
     properties.setProperty("servers", "SocketServer:3333");
     properties.setProperty("plugins", "StandardPlugin,AdminPlugin,YoutubePlugin,RockRadioPlugin");
     properties.setProperty("player", "VlcPlayer");
+    properties.setProperty("maxHistorySize", "100");
     properties.setProperty("YoutubeApiKey", "");
+    properties.setProperty("vlcLocation", "");
     
     return properties;
   }

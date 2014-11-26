@@ -8,10 +8,12 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import be.iswleuven.mediacontroller.config.Config;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.sun.jna.Native;
+import com.sun.jna.NativeLibrary;
 
 @Singleton
 public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Player {
@@ -30,15 +32,22 @@ public class VlcPlayer extends MediaPlayerEventAdapter implements Observer, Play
    * The currently playing song.
    */
   private Song currentSong;
-  
+
   /**
    * Create a new VLC player.
+   * 
+   * @param config
+   * @param playlist
    */
   @Inject
-  public VlcPlayer(Playlist playlist) {
+  public VlcPlayer(Config config, Playlist playlist) {
     this.playlist = playlist;
     this.playlist.addObserver(this);
 
+    if (! config.getVlcLocation().equals("")) {
+      NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), config.getVlcLocation());
+    }
+    
     Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
     
     this.player = new MediaPlayerFactory().newHeadlessMediaPlayer();
