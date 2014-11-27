@@ -161,4 +161,9 @@ public abstract class Player implements Observer {
    */
   public abstract void setVolume(int amount);
   
+  /**
+   * Toggle mute.
+   */
+  public abstract void mute();
+  
 }

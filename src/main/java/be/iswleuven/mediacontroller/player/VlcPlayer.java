@@ -106,6 +106,11 @@ public class VlcPlayer extends Player implements MediaPlayerEventListener, Obser
     
     this.player.setVolume(amount);
   }
+  
+  @Override
+  public void mute() {
+    this.player.mute();
+  }
 
   @Override
   public void update(Observable obs, Object o) {
