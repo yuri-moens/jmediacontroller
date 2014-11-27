@@ -14,6 +14,11 @@ public class PositionCommand extends Command {
   public static String COMMAND_STRING = "position";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = " <position>\tGa naar een bepaalde positie in de playlist.";
+  
+  /**
    * The playlist instance.
    */
   private final Playlist playlist;

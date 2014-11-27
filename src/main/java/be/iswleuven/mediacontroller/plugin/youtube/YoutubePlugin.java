@@ -14,6 +14,7 @@ public class YoutubePlugin extends Plugin {
   @Override
   public void initializeCommands() {
     registerCommand(AddCommand.class);
+    registerCommand(HelpCommand.class);
   }
 
 }

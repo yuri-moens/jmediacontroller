@@ -14,6 +14,11 @@ public class CurrentCommand extends Command {
   public static String COMMAND_STRING = "current";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = "\t\tToon het huidig liedje.";
+  
+  /**
    * The player instance.
    */
   private final Player player;

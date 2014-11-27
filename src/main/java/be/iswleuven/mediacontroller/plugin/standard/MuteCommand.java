@@ -14,6 +14,11 @@ public class MuteCommand extends Command {
   public static String COMMAND_STRING = "mute";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = "\t\t\tMute de speler.";
+  
+  /**
    * The player instance.
    */
   private final Player player;

@@ -19,6 +19,11 @@ public class VolumeDownCommand extends Command {
   private final Player player;
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = "\t\t\tZet het volume 5% lager.";
+  
+  /**
    * Create a new volume down command.
    * 
    * @param player

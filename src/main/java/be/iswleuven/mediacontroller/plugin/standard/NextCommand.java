@@ -14,6 +14,11 @@ public class NextCommand extends Command {
   public static String COMMAND_STRING = "next";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = "\t\t\tGa naar het volgend liedje in de playlist.";
+  
+  /**
    * The playlist instance.
    */
   private final Playlist playlist;

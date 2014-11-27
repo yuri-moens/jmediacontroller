@@ -21,6 +21,24 @@ public class AddCommand extends Command {
   public static final String COMMAND_STRING = "default";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP ="<name>\tMogelijke stationnamen zijn te vinden op rockradio.com.\n"
+      + "\t\tMogelijke aliassen zijn:\n"
+      + "\t\t  60s = 60srock\n"
+      + "\t\t  80s = 80srock\n"
+      + "\t\t  80salt = 80salternative\n"
+      + "\t\t  90s = 90srock\n"
+      + "\t\t  90salt = 90salternative\n"
+      + "\t\t  ballads = rockballads\n"
+      + "\t\t  beatles = beatlestribute\n"
+      + "\t\t  blues = bluesrock\n"
+      + "\t\t  death = deathmetal\n"
+      + "\t\t  indie = indierock\n"
+      + "\t\t  melodeath = melodicdeathmetal\n"
+      + "\t\t  thrash = thrashmetal";
+  
+  /**
    * The map with station aliases.
    */
   private static final Map<String, String> stationAliases;

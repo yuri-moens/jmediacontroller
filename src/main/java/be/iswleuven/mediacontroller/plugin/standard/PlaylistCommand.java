@@ -17,6 +17,11 @@ public class PlaylistCommand extends Command {
   public static String COMMAND_STRING = "playlist";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = "\t\tToon de huidige playlist.";
+  
+  /**
    * The playlist instance.
    */
   private final Playlist playlist;

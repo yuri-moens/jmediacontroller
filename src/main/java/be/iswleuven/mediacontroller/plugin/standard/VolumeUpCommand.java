@@ -19,6 +19,11 @@ public class VolumeUpCommand extends Command {
   private final Player player;
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = "\t\t\tZet het volume 5% hoger.";
+  
+  /**
    * Create a new volume up command.
    * 
    * @param player

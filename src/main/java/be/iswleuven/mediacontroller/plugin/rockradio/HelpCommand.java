@@ -1,11 +1,11 @@
-package be.iswleuven.mediacontroller.plugin.standard;
+package be.iswleuven.mediacontroller.plugin.rockradio;
 
 import be.iswleuven.mediacontroller.command.AbstractHelpCommand;
 
 import com.google.inject.Inject;
 
 public class HelpCommand extends AbstractHelpCommand {
-
+  
   /**
    * The command string.
    */
@@ -14,16 +14,16 @@ public class HelpCommand extends AbstractHelpCommand {
   /**
    * The command help string.
    */
-  public static final String COMMAND_HELP = "\t\t\tToon dit menu.";
-  
+  public static final String COMMAND_HELP = "\t\tToon dit menu";
+
   /**
-   * Create a new standard help command.
+   * Create a new admin help command.
    * 
    * @param plugin
    */
   @Inject
-  public HelpCommand(StandardPlugin plugin) {
+  public HelpCommand(RockRadioPlugin plugin) {
     super(plugin);
   }
-  
+
 }

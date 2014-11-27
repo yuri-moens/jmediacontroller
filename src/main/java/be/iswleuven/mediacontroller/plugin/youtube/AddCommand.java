@@ -27,6 +27,11 @@ public class AddCommand extends Command {
   public static final String COMMAND_STRING = "default";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = "<title|url>";
+  
+  /**
    * The YouTube API handler.
    */
   private static final YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {

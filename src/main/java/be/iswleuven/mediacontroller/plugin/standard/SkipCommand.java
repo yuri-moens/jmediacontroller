@@ -14,6 +14,12 @@ public class SkipCommand extends Command {
   public static String COMMAND_STRING = "skip";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = " <time>\t\tSla een deel van het liedje over.\n"
+      + "\t\t\tMogelijke notaties: 30, 30s, 1m, 1m30, 1m30s";
+  
+  /**
    * The player instance.
    */
   private final Player player;

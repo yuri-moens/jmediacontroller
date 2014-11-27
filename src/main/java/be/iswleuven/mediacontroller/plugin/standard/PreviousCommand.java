@@ -14,6 +14,11 @@ public class PreviousCommand extends Command {
   public static String COMMAND_STRING = "previous";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = "\t\tGa naar het vorige liedje in de playlist.";
+  
+  /**
    * The playlist instance.
    */
   private final Playlist playlist;

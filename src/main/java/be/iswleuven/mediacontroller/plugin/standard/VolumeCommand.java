@@ -19,6 +19,11 @@ public class VolumeCommand extends Command {
   public static String[] COMMAND_ALIASES = { "vol" };
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = " <level>\tZet het volumeniveau.";
+  
+  /**
    * The player instance.
    */
   private final Player player;

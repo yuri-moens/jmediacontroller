@@ -14,6 +14,11 @@ public class StopCommand extends Command {
   public static String COMMAND_STRING = "stop";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = "\t\t\tStop met afspelen en wis de playlist.";
+  
+  /**
    * The player instance.
    */
   private final Player player;

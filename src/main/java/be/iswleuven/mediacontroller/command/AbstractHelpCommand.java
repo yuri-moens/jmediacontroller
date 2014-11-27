@@ -30,14 +30,23 @@ public abstract class AbstractHelpCommand extends Command {
         Class<? extends Command> commandClass = this.PLUGIN.getCommands().get(value);
         
         Field field = null;
-        String commandHelp = "  " + value;
+        String commandHelp = value.equals("default") ? "  " : "  " + value;
         
         try {
           field = commandClass.getDeclaredField("COMMAND_ALIASES");
           String[] aliases = (String[]) field.get(null);
           
+          boolean isAlias = false;
+          
           for (String alias : aliases) {
             commandHelp += " | " + alias;
+            if (alias.equals(value)) {
+              isAlias = true;
+            }
+          }
+          
+          if (isAlias) {
+            continue;
           }
         } catch (Exception e) {}
         

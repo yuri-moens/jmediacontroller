@@ -14,6 +14,11 @@ public class PauseCommand extends Command {
   public static String COMMAND_STRING = "pause";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = "\t\t\tPauzeer het afspelen.";
+  
+  /**
    * The player instance.
    */
   private final Player player;
