@@ -58,7 +58,6 @@ public class Playlist extends Observable {
    * @return
    */
   public Song getSong() {
-    System.out.println(this.position);
     if (this.songs.size() == this.position) {
       this.position--;
 
