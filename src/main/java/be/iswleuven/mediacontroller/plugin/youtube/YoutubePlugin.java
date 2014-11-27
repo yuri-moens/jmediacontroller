@@ -8,7 +8,7 @@ public class YoutubePlugin extends Plugin {
    * Create a new Youtube plugin.
    */
   public YoutubePlugin() {
-    super("YoutubePlugin", "1.0", "yt", "Yuri Moens");
+    super("YouTubePlugin", "1.0", "yt", "Yuri Moens");
   }
 
   @Override
