@@ -16,6 +16,12 @@ public class ServerCommand extends Command {
   public static final String COMMAND_STRING = "server";
   
   /**
+   * The command help string.
+   */
+  public static final String COMMAND_HELP = " list - Geef een lijst van alle beschikbare servers.\n"
+      + "\t start|stop|restart <server name|all> - Start, stop of herstart een/alle server(s).";
+  
+  /**
    * The server handler instance.
    */
   private ServerHandler serverHandler;
