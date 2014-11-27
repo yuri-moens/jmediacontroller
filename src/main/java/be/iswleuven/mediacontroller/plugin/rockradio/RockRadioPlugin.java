@@ -14,7 +14,6 @@ public class RockRadioPlugin extends Plugin {
   @Override
   public void initializeCommands() {
     registerCommand(AddCommand.class);
-    registerCommand(HelpCommand.class);
   }
 
 }

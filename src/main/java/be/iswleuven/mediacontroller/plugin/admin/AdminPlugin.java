@@ -13,7 +13,6 @@ public class AdminPlugin extends Plugin {
 
   @Override
   public void initializeCommands() {
-    registerCommand(HelpCommand.class);
     registerCommand(ServerCommand.class);
   }
   

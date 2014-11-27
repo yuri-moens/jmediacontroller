@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 
 import be.iswleuven.mediacontroller.plugin.Plugin;
 
-public abstract class AbstractHelpCommand extends Command {
+public class HelpCommand extends Command {
 
   /**
    * The command string.
@@ -12,12 +12,16 @@ public abstract class AbstractHelpCommand extends Command {
   public static String COMMAND_STRING = "help";
   
   /**
+   * The command help string.
+   */
+  public static String COMMAND_HELP = "";
+  
+  /**
    * Create a new help command.
    * 
-   * @param player
    * @param plugin
    */
-  public AbstractHelpCommand(Plugin plugin) {
+  public HelpCommand(Plugin plugin) {
     super(plugin);
   }
 

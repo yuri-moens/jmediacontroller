@@ -6,6 +6,7 @@ import java.util.Map;
 
 import be.iswleuven.mediacontroller.MediaController;
 import be.iswleuven.mediacontroller.command.Command;
+import be.iswleuven.mediacontroller.command.HelpCommand;
 
 public abstract class Plugin {
   
@@ -48,6 +49,8 @@ public abstract class Plugin {
     this.commandNamespace = commandNamespace;
     this.authors = authors;
     this.commands = new HashMap<String, Class<? extends Command>>();
+    
+    this.commands.put("help", HelpCommand.class);
     
     initializeCommands();
   }

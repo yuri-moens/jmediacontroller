@@ -74,9 +74,15 @@ public class CommandFactory {
       }
     }
     
-    Command command = this.injector.getInstance(commandClass);
+    Command command = null;
     
-    command.setParameters(parameters);
+    if (commandClass.equals(HelpCommand.class)) {
+      command = new HelpCommand(plugin);
+    } else {
+      command = this.injector.getInstance(commandClass);
+      
+      command.setParameters(parameters);
+    }
     
     command.registerWorker(worker);
     
