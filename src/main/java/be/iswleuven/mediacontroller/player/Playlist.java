@@ -1,6 +1,7 @@
 package be.iswleuven.mediacontroller.player;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import be.iswleuven.mediacontroller.config.Config;
@@ -41,6 +42,15 @@ public class Playlist extends Observable {
   }
   
   /**
+   * Get the current position.
+   * 
+   * @return
+   */
+  public int getPosition() {
+    return this.position;
+  }
+  
+  /**
    * Add a song to the playlist.
    * 
    * @param song
@@ -65,6 +75,15 @@ public class Playlist extends Observable {
     } else {
       return this.songs.get(this.position);
     }
+  }
+  
+  /**
+   * Get the list with all the songs currently in the playlist.
+   * 
+   * @return
+   */
+  public List<Song> getSongs() {
+    return this.songs;
   }
   
   /**

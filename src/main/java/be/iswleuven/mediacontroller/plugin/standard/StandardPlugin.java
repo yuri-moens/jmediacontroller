@@ -18,6 +18,7 @@ public class StandardPlugin extends Plugin {
     registerCommand(MuteCommand.class);
     registerCommand(NextCommand.class);
     registerCommand(PauseCommand.class);
+    registerCommand(PlaylistCommand.class);
     registerCommand(PositionCommand.class);
     registerCommand(PreviousCommand.class);
     registerCommand(SkipCommand.class);
