@@ -1,6 +1,8 @@
 package be.iswleuven.mediacontroller.plugin.youtube;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -9,6 +11,7 @@ import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
 import be.iswleuven.mediacontroller.config.Config;
 import be.iswleuven.mediacontroller.player.Playlist;
+import be.iswleuven.mediacontroller.player.Song;
 
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -66,18 +69,7 @@ public class AddCommand extends Command {
     
     String[] youtubeInfo = getYoutubeInfo(query);
     
-    this.playlist.addSong(getSong(youtubeInfo[0], youtubeInfo[1]));
-  }
-  
-  /**
-   * Create a song object from the given query.
-   * 
-   * @param title
-   * @param query
-   * @return
-   */
-  private YoutubeSong getSong(String title, String query) {  
-    return new YoutubeSong(title, query, getWorker().getAddress());
+    this.playlist.addSong(new Song(youtubeInfo[0], parseUrl(youtubeInfo[1]), getWorker().getAddress()));
   }
 
   /**
@@ -112,6 +104,28 @@ public class AddCommand extends Command {
     }
     
     return url;
+  }
+  
+  /**
+   * Parse the Youtube URL to get stream link.
+   * 
+   * @return
+   */
+  private String parseUrl(String url) {
+    String streamUrl = null;
+    
+    try {
+      Process p = Runtime.getRuntime()
+          .exec("python src/main/resources/youtube-dl --skip-download -f bestaudio -g " + url);
+
+      BufferedReader outputReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+      
+      streamUrl = outputReader.readLine();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    
+    return streamUrl;
   }
   
 }
