@@ -35,7 +35,7 @@ public class History {
       
       PrintWriter writer = new PrintWriter(new FileOutputStream(file, true));
       
-      writer.println(song.getTitle() + "," + song.getClientAddress().toString());
+      writer.println(song.getTitle() + " (" + song.getClientAddress().toString() + ")");
       
       writer.close();
     } catch (IOException e) {
