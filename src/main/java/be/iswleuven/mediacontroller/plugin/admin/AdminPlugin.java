@@ -14,6 +14,7 @@ public class AdminPlugin extends Plugin {
   @Override
   public void initializeCommands() {
     registerCommand(ServerCommand.class);
+    registerCommand(UpdateCommand.class);
   }
   
 }

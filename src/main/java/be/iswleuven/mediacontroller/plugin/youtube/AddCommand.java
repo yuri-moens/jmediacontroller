@@ -116,7 +116,7 @@ public class AddCommand extends Command {
     
     try {
       Process p = Runtime.getRuntime()
-          .exec("python src/main/resources/youtube-dl --skip-download -f bestaudio -g " + url);
+          .exec("python " + YoutubePlugin.YOUTUBE_DL + " --skip-download -f bestaudio -g " + url);
 
       BufferedReader outputReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
       
