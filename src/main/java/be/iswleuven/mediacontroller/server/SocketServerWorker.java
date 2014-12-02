@@ -13,6 +13,14 @@ import be.iswleuven.mediacontroller.command.CommandException;
 
 public class SocketServerWorker implements Runnable, Worker {
 
+  private final static String WELCOME_MESSAGE = "#########################################\n"
+      + "#     Welkom bij de MediaController     #\n"
+      + "#\t\t\t\t\t#\n"
+      + "# Gebruik het \"help\" commando om\t#\n"
+      + "# een lijst van commando's te zien.\t#\n"
+      + "#\t\t\t\t\t#\n"
+      + "#########################################";
+  
   /**
    * The client socket.
    */
@@ -43,6 +51,11 @@ public class SocketServerWorker implements Runnable, Worker {
     try {
       BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
       out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+      out.println(WELCOME_MESSAGE);
+      
+      out.print("mc@isw » ");
+      out.flush();
   
       String input;
       while ((input = in.readLine()) != null ) {
@@ -51,6 +64,8 @@ public class SocketServerWorker implements Runnable, Worker {
         } catch (CommandException e) {
           out.println(e.getMessage());
         }
+        out.print("mc@isw » ");
+        out.flush();
       }
     } catch (IOException e) {
       if (MediaController.verbose) {
