@@ -13,13 +13,14 @@ import be.iswleuven.mediacontroller.command.CommandException;
 
 public class SocketServerWorker implements Runnable, Worker {
 
-  private final static String WELCOME_MESSAGE = "#########################################\n"
-      + "#     Welkom bij de MediaController     #\n"
-      + "#\t\t\t\t\t#\n"
-      + "# Gebruik het \"help\" commando om\t#\n"
-      + "# een lijst van commando's te zien.\t#\n"
-      + "#\t\t\t\t\t#\n"
-      + "#########################################";
+  private final static String WELCOME_MESSAGE = ""
+      + "##########################################\n"
+      + "#     Welkom bij de MediaController!     #\n"
+      + "#                                        #\n"
+      + "# Gebruik het 'help' commando om         #\n"
+      + "# een lijst van commando's te zien.      #\n"
+      + "#                                        #\n"
+      + "##########################################";
   
   /**
    * The client socket.
