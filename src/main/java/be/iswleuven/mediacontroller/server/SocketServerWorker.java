@@ -13,6 +13,9 @@ import be.iswleuven.mediacontroller.command.CommandException;
 
 public class SocketServerWorker implements Runnable, Worker {
 
+  /**
+   * The welcome message.
+   */
   private final static String WELCOME_MESSAGE = ""
       + "##########################################\n"
       + "#     Welkom bij de MediaController!     #\n"
@@ -60,6 +63,10 @@ public class SocketServerWorker implements Runnable, Worker {
   
       String input;
       while ((input = in.readLine()) != null ) {
+        if (input.toLowerCase().equals("exit")) {
+          this.clientSocket.close();
+        }
+        
         try {
           socketServer.getCommandBus().send(input, this);
         } catch (CommandException e) {
