@@ -4,6 +4,7 @@ package be.iswleuven.mediacontroller;
 import be.iswleuven.mediacontroller.command.CommandHandler;
 import be.iswleuven.mediacontroller.config.Config;
 import be.iswleuven.mediacontroller.config.ConfigLoader;
+import be.iswleuven.mediacontroller.dependency.DependencyHandler;
 import be.iswleuven.mediacontroller.player.Player;
 import be.iswleuven.mediacontroller.player.Playlist;
 import be.iswleuven.mediacontroller.player.VlcPlayer;
@@ -18,6 +19,7 @@ public class AppModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(CommandHandler.class).in(Singleton.class);
+    bind(DependencyHandler.class).in(Singleton.class);
     bind(PluginHandler.class).in(Singleton.class);
     bind(ServerHandler.class).in(Singleton.class);
     

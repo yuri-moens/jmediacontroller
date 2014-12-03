@@ -4,6 +4,7 @@ import java.io.File;
 
 import be.iswleuven.mediacontroller.command.CommandHandler;
 import be.iswleuven.mediacontroller.config.ConfigLoader;
+import be.iswleuven.mediacontroller.dependency.DependencyHandler;
 import be.iswleuven.mediacontroller.player.Player;
 import be.iswleuven.mediacontroller.plugin.PluginHandler;
 import be.iswleuven.mediacontroller.server.ServerHandler;
@@ -38,6 +39,7 @@ public class MediaController {
     injector.getInstance(ServerHandler.class).startAllServers();
     injector.getInstance(PluginHandler.class);
     injector.getInstance(CommandHandler.class);
+    injector.getInstance(DependencyHandler.class);
     injector.getInstance(Player.class);
   }
   

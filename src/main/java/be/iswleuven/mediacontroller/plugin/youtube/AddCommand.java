@@ -10,6 +10,8 @@ import org.apache.commons.lang.StringUtils;
 import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
 import be.iswleuven.mediacontroller.config.Config;
+import be.iswleuven.mediacontroller.dependency.Dependency;
+import be.iswleuven.mediacontroller.dependency.DependencyHandler;
 import be.iswleuven.mediacontroller.player.Playlist;
 import be.iswleuven.mediacontroller.player.Song;
 
@@ -52,15 +54,21 @@ public class AddCommand extends Command {
   private final Config config;
   
   /**
+   * The youtube-dl instance.
+   */
+  private final Dependency youtubeDl;
+  
+  /**
    * Create a new play command.
    * 
    * @param plugin
    */
   @Inject
-  public AddCommand(Config config, Playlist playlist, YoutubePlugin plugin) {
+  public AddCommand(Config config, DependencyHandler dependencyHandler, Playlist playlist, YoutubePlugin plugin) {
     super(plugin);
     this.playlist = playlist;
     this.config = config;
+    this.youtubeDl = dependencyHandler.getDependency("youtube-dl");
   }
 
   @Override
@@ -116,7 +124,7 @@ public class AddCommand extends Command {
     
     try {
       Process p = Runtime.getRuntime()
-          .exec("python " + YoutubePlugin.YOUTUBE_DL + " --skip-download -f bestaudio -g " + url);
+          .exec("python " + youtubeDl.getFile().getAbsolutePath() + " --skip-download -f bestaudio -g " + url);
 
       BufferedReader outputReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
       
