@@ -1,15 +1,11 @@
 package be.iswleuven.mediacontroller.plugin.rockradio;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import be.iswleuven.mediacontroller.command.Command;
+import be.iswleuven.mediacontroller.command.CommandBus;
 import be.iswleuven.mediacontroller.command.CommandException;
-import be.iswleuven.mediacontroller.player.Playlist;
-import be.iswleuven.mediacontroller.player.Song;
 
 import com.google.inject.Inject;
 
@@ -60,9 +56,9 @@ public class AddCommand extends Command {
   }
   
   /**
-   * The playlist instance.
+   * The command bus instance.
    */
-  private final Playlist playlist;
+  private final CommandBus commandBus;
   
   /**
    * Create a new play command.
@@ -70,9 +66,9 @@ public class AddCommand extends Command {
    * @param plugin
    */
   @Inject
-  public AddCommand(Playlist playlist, RockRadioPlugin plugin) {
+  public AddCommand(CommandBus commandBus, RockRadioPlugin plugin) {
     super(plugin);
-    this.playlist = playlist;
+    this.commandBus = commandBus;
   }
 
   @Override
@@ -82,38 +78,9 @@ public class AddCommand extends Command {
     parameter = AddCommand.stationAliases.get(parameter) == null ?
         parameter : AddCommand.stationAliases.get(parameter);
 
-    String url = null;
+    String url = "http://listen.rockradio.com/public3/" + parameter + ".pls";
     
-    try {
-      url = getStreamUrl(parameter);
-    } catch (Exception e) {
-      throw new CommandException("Kan de stream URL niet vinden.");
-    }
-    
-    this.playlist.addSong(new Song("Rock Radio - " + parameter, url, this.worker.getAddress()));
-  }
-  
-  /**
-   * Get the stream URL for the given parameter.
-   * 
-   * @param parameter
-   * @return
-   * @throws Exception
-   */
-  private String getStreamUrl(String parameter) throws Exception {
-    URL pls = new URL("http://listen.rockradio.com/public3/" + parameter + ".pls");
-    BufferedReader in = new BufferedReader(new InputStreamReader(pls.openStream()));
-    
-    String streamUrl = null;
-    String inputLine;
-    while ((inputLine = in.readLine()) != null) {
-      if (inputLine.contains("File1")) {
-        streamUrl = inputLine.replace("File1=", "");
-      }
-    }
-    in.close();
-    
-    return streamUrl;
+    commandBus.send("radio " + url, this.worker);
   }
   
 }
