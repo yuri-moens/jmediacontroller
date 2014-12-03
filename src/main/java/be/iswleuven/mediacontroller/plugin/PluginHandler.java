@@ -49,7 +49,7 @@ public class PluginHandler {
       try {
         Set<Class<?>> pluginClasses = new ClassesInPackageScanner().setResourceNameFilter(new ResourceNameFilter() {
           public boolean acceptResourceName(java.lang.String packageName, java.lang.String fileName) {
-              return fileName.equals(plugin + ".class");
+              return fileName.endsWith(plugin + ".class");
           }
         }).scan("be.iswleuven.mediacontroller.plugin");
         
