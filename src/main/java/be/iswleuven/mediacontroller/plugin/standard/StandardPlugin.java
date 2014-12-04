@@ -14,6 +14,7 @@ public class StandardPlugin extends Plugin {
   @Override
   public void initializeCommands() {
     registerCommand(CurrentCommand.class);
+    registerCommand(DoorCommand.class);
     registerCommand(MuteCommand.class);
     registerCommand(NextCommand.class);
     registerCommand(PauseCommand.class);
@@ -26,7 +27,6 @@ public class StandardPlugin extends Plugin {
     registerCommand(VolumeCommand.class);
     registerCommand(VolumeDownCommand.class);
     registerCommand(VolumeUpCommand.class);
-    registerCommand(DeurCommand.class);
   }
   
 }
