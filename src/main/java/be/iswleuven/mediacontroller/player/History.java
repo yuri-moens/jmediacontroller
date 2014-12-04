@@ -49,7 +49,7 @@ public class History {
    * @return
    */
   private String getMonth() {
-    return new SimpleDateFormat("MMMM").format(new Date(System.currentTimeMillis())).toLowerCase();
+    return new SimpleDateFormat("MM-MMMM").format(new Date(System.currentTimeMillis())).toLowerCase();
   }
   
   /**

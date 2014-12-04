@@ -30,18 +30,26 @@ public class HistoryCommand extends Command {
   static {
     monthTranslations = new HashMap<String, String>();
 
-    monthTranslations.put("januari", "january");
-    monthTranslations.put("februari", "february");
-    monthTranslations.put("maart", "march");
-    monthTranslations.put("april", "april");
-    monthTranslations.put("mei", "may");
-    monthTranslations.put("juni", "june");
-    monthTranslations.put("juli", "july");
-    monthTranslations.put("augustus", "august");
-    monthTranslations.put("september", "september");
-    monthTranslations.put("oktober", "october");
-    monthTranslations.put("november", "november");
-    monthTranslations.put("december", "december");
+    monthTranslations.put("januari", "01-january");
+    monthTranslations.put("january", "01-january");
+    monthTranslations.put("februari", "02-february");
+    monthTranslations.put("february", "02-february");
+    monthTranslations.put("maart", "03-march");
+    monthTranslations.put("march", "03-march");
+    monthTranslations.put("april", "04-april");
+    monthTranslations.put("mei", "05-may");
+    monthTranslations.put("may", "05-may");
+    monthTranslations.put("juni", "06-june");
+    monthTranslations.put("june", "06-june");
+    monthTranslations.put("juli", "07-july");
+    monthTranslations.put("july", "07-july");
+    monthTranslations.put("augustus", "08-august");
+    monthTranslations.put("august", "08-august");
+    monthTranslations.put("september", "09-september");
+    monthTranslations.put("oktober", "10-october");
+    monthTranslations.put("october", "10-october");
+    monthTranslations.put("november", "11-november");
+    monthTranslations.put("december", "12-december");
   }
   
   /**
