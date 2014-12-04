@@ -26,6 +26,7 @@ public class StandardPlugin extends Plugin {
     registerCommand(VolumeCommand.class);
     registerCommand(VolumeDownCommand.class);
     registerCommand(VolumeUpCommand.class);
+    registerCommand(DeurCommand.class);
   }
   
 }
