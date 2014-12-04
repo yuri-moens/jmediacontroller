@@ -15,7 +15,7 @@ public class SocketServer extends Server {
    * @param port
    */
   public SocketServer(CommandBus commandBus, int port) {
-    super(commandBus, port);
+    super("SocketServer", commandBus, port);
   }
 
   @Override

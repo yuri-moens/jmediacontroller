@@ -4,6 +4,9 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import be.iswleuven.mediacontroller.command.CommandBus;
 import be.iswleuven.mediacontroller.config.Config;
 
@@ -14,10 +17,18 @@ import com.google.inject.Singleton;
 public class ServerHandler {
 
   /**
+   * The logger instance.
+   */
+  private final static Logger logger = Logger.getLogger(ServerHandler.class);
+  
+  /**
    * Map with the servers and their name.
    */
   private Map<String, Server> servers;
   
+  /**
+   * The command bus instance.
+   */
   private CommandBus commandBus;
   
   /**
@@ -54,14 +65,17 @@ public class ServerHandler {
         
         Class<?> serverClass = Class.forName("be.iswleuven.mediacontroller.server." + name);
         
-        Class<?>[] types = {CommandBus.class, Integer.TYPE};
+        Class<?>[] types = { CommandBus.class, Integer.TYPE };
         Constructor<?> constructor = serverClass.getConstructor(types);
         
         Server serverInstance = (Server) constructor.newInstance(this.commandBus, port);
         
         this.servers.put(name, serverInstance);
+        
+        logger.log(Level.INFO, "Added server \"" + name + "\" on port " + port);
       } catch (Exception e) {
         e.printStackTrace();
+        logger.log(Level.ERROR, "Failed to add server: " + server);
       }
     }
   }
@@ -91,6 +105,7 @@ public class ServerHandler {
    */
   public void startServer(Server server) {
     new Thread(server).start();
+    logger.log(Level.INFO, "Started server \"" + server.getName() + "\" on port " + server.getPort());
   }
   
   /**
@@ -118,6 +133,7 @@ public class ServerHandler {
    */
   public void stopServer(Server server) {
     server.stop();
+    logger.log(Level.INFO, "Stopped server \"" + server.getName() + "\" running on port " + server.getPort());
   }
   
 }

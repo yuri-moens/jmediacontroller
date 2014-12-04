@@ -10,6 +10,11 @@ public abstract class Server implements Runnable {
   private int port;
 
   /**
+   * The name of the server.
+   */
+  private String name;
+  
+  /**
    * The command bus.
    */
   private CommandBus commandBus;
@@ -24,7 +29,8 @@ public abstract class Server implements Runnable {
    * 
    * @param commandBus
    */
-  public Server(CommandBus commandBus, int port) {
+  public Server(String name, CommandBus commandBus, int port) {
+    this.name = name;
     this.commandBus = commandBus;
     this.port = port;
   }
@@ -35,7 +41,7 @@ public abstract class Server implements Runnable {
    * @return
    */
   public CommandBus getCommandBus() {
-    return commandBus;
+    return this.commandBus;
   }
   
   /**
@@ -44,14 +50,23 @@ public abstract class Server implements Runnable {
    * @return
    */
   public int getPort() {
-    return port;
+    return this.port;
+  }
+  
+  /**
+   * Get the name of the server.
+   * 
+   * @return
+   */
+  public String getName() {
+    return this.name;
   }
   
   /**
    * Stop the server.
    */
   public synchronized void stop() {
-    isStopped = true;
+    this.isStopped = true;
   }
   
   /**
@@ -60,7 +75,7 @@ public abstract class Server implements Runnable {
    * @return
    */
   public synchronized boolean isStopped() {
-    return isStopped;
+    return this.isStopped;
   }
   
 }

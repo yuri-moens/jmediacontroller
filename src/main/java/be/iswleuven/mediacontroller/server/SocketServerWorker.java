@@ -7,11 +7,19 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import be.iswleuven.mediacontroller.MediaController;
 import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
 
 public class SocketServerWorker implements Runnable, Worker {
+
+  /**
+   * The logger instance.
+   */
+  private final static Logger logger = Logger.getLogger(SocketServerWorker.class);
 
   /**
    * The welcome message.
@@ -48,6 +56,8 @@ public class SocketServerWorker implements Runnable, Worker {
   public SocketServerWorker(Socket clientSocket, SocketServer socketServer) {
     this.clientSocket = clientSocket;
     this.socketServer = socketServer;
+    
+    logger.log(Level.INFO, "Created socket server worker for client with address: " + clientSocket.getInetAddress().toString());
   }
   
   @Override
@@ -79,6 +89,7 @@ public class SocketServerWorker implements Runnable, Worker {
       if (MediaController.verbose) {
         System.out.println("Verbinding verbroken.");
       }
+      logger.log(Level.INFO, "Closed connection with client with address: " + clientSocket.getInetAddress().toString());
     }
   }
 

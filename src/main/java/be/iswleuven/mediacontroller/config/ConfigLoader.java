@@ -6,9 +6,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import be.iswleuven.mediacontroller.MediaController;
 
 public class ConfigLoader {
+
+  /**
+   * The logger instance.
+   */
+  private final static Logger logger = Logger.getLogger(ConfigLoader.class);
 
   /**
    * The config instance.
@@ -42,6 +50,8 @@ public class ConfigLoader {
     try {
       properties.load(new FileInputStream(configFile));
       config = new Config(properties);
+      
+      logger.log(Level.INFO, "Loaded configuration file: " + configFile);
     } catch (IOException e) {
       if (MediaController.verbose) {
         System.out.println("Configuratiebestand niet gevonden. Nieuw bestand wordt aangemaakt: "
@@ -50,6 +60,8 @@ public class ConfigLoader {
       
       config = new Config();
       save(config, configFile);
+      
+      logger.log(Level.INFO, "Created configuration file");
     }
     
     ConfigLoader.config = config;

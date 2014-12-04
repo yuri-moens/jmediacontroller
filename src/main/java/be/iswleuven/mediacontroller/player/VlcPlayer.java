@@ -3,6 +3,9 @@ package be.iswleuven.mediacontroller.player;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -18,6 +21,11 @@ import com.sun.jna.NativeLibrary;
 
 @Singleton
 public class VlcPlayer extends Player implements MediaPlayerEventListener, Observer {
+
+  /**
+   * The logger instance.
+   */
+  private final static Logger logger = Logger.getLogger(VlcPlayer.class);
   
   /**
    * The media player.
@@ -42,6 +50,8 @@ public class VlcPlayer extends Player implements MediaPlayerEventListener, Obser
     
     this.player = new MediaPlayerFactory().newHeadlessMediaPlayer();
     this.player.addMediaPlayerEventListener(this);
+    
+    logger.log(Level.INFO, "Created VlcPlayer");
   }
   
   @Override

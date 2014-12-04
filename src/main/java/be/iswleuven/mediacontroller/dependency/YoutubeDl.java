@@ -9,7 +9,15 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 public class YoutubeDl extends Dependency {
+
+  /**
+   * The logger instance.
+   */
+  private final static Logger logger = Logger.getLogger(YoutubeDl.class);
 
   /**
    * Create a new youtube-dl dependency.
@@ -38,7 +46,10 @@ public class YoutubeDl extends Dependency {
         fos.close();
         
         setOutput("youtube-dl werd geïnstalleerd.");
+        
+        logger.log(Level.INFO, "Installed youtube-dl");
       } catch (Exception e) {
+        logger.log(Level.ERROR, "Failed to install youtube-dl");
         throw new DependencyException("youtube-dl kon niet gedownload worden.");
       }
     }
@@ -50,6 +61,7 @@ public class YoutubeDl extends Dependency {
       getFile().delete();
       
       setOutput("youtube-dl werd verwijderd.");
+      logger.log(Level.INFO, "Removed youtube-dl");
     } else {
       setOutput("youtube-dl is niet geïnstalleerd.");
     }
@@ -64,8 +76,10 @@ public class YoutubeDl extends Dependency {
         BufferedReader outputReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
         
         setOutput("[youtube-dl] " + outputReader.readLine());
+        logger.log(Level.INFO, "Updated youtube-dl");
       } catch (IOException e) {
         e.printStackTrace();
+        logger.log(Level.INFO, "Failed to update youtube-dl");
       }
     } else {
       setOutput("youtube-dl is niet geïnstalleerd");

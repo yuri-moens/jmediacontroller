@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import be.iswleuven.mediacontroller.config.Config;
 
 import com.google.inject.Inject;
@@ -15,6 +18,11 @@ import com.metapossum.utils.scanner.reflect.ClassesInPackageScanner;
 
 @Singleton
 public class PluginHandler {
+
+  /**
+   * The logger instance.
+   */
+  private final static Logger logger = Logger.getLogger(PluginHandler.class);
   
   /**
    * Map with the plugins and their command namespace.
@@ -63,11 +71,13 @@ public class PluginHandler {
           Plugin pluginInstance = (Plugin) constructor.newInstance();
           
           this.plugins.put(pluginInstance.getCommandNamespace(), pluginInstance);
+          
+          logger.log(Level.INFO, "Added plugin \"" + pluginInstance.getName() + "\"");
         } else {
           throw new PluginNotFoundException(plugin);
         }
       } catch (Exception e) {
-        e.printStackTrace();
+        logger.log(Level.ERROR, "Failed to add plugin \"" + plugin + "\"");
       }
     }
   }
