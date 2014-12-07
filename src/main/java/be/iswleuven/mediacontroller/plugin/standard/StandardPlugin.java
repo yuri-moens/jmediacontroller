@@ -24,6 +24,7 @@ public class StandardPlugin extends Plugin {
     registerCommand(PreviousCommand.class);
     registerCommand(SkipCommand.class);
     registerCommand(StopCommand.class);
+    registerCommand(UndoCommand.class);
     registerCommand(VolumeCommand.class);
     registerCommand(VolumeDownCommand.class);
     registerCommand(VolumeUpCommand.class);

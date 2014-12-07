@@ -145,20 +145,13 @@ public class Playlist extends Observable {
   }
   
   /**
-   * Remove the last song.
+   * Remove the last song and return it.
    */
-  public void removeLast() {
-    removeLast(1);
-  }
-  
-  /**
-   * Remove the last amount of songs.
-   * 
-   * @param amount
-   */
-  public void removeLast(int amount) {
-    for (int i = 0; i < amount && this.songs.size() > 0; i++) {
-      this.songs.remove(this.songs.size() - 1);     
+  public Song removeLast() {
+    if (this.songs.size() > 0 && this.position + 1 < this.songs.size()) {
+      return this.songs.remove(this.songs.size() - 1);
+    } else {
+      return null;
     }
   }
   
