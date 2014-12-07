@@ -127,6 +127,16 @@ public abstract class Player implements Observer {
   public abstract void stop();
   
   /**
+   * Play the next song in the playlist.
+   */
+  public abstract void next();
+  
+  /**
+   * Play the previous song in the playlist.
+   */
+  public abstract void previous();
+  
+  /**
    * Skip part of the song.
    * 
    * @param delta

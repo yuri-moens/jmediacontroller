@@ -25,12 +25,7 @@ public class Playlist extends Observable {
   /**
    * The number that points to the index of the current playing song.
    */
-  private int position = 0;
-  
-  /**
-   * Flag indicating if the current song should be skipped.
-   */
-  private boolean skipCurrent;
+  private int position = -1;
   
   /**
    * Create a new playlist.
@@ -68,13 +63,7 @@ public class Playlist extends Observable {
    * @return
    */
   public Song getSong() {
-    if (this.songs.size() == this.position) {
-      this.position--;
-
-      return null;
-    } else {
-      return this.songs.get(this.position);
-    }
+    return this.songs.get(this.position);
   }
   
   /**
@@ -105,51 +94,37 @@ public class Playlist extends Observable {
         this.position = position;
       }
     }
-    
-    setChanged();
-    notifyObservers(this);
   }
   
   /**
-   * Set the position to the next song.
+   * Set the position of the playlist to the last song.
+   */
+  public void setToLastPosition() {
+    setPosition(this.songs.size() - 1);
+  }
+  
+  /**
+   * Set the position to the next song in the playlist if there is one.
    */
   public void nextSong() {
+    if (this.position == this.songs.size() - 1) {
+      return;
+    }
+    
     if (this.position == this.MAX_HISTORY_SIZE) {
       this.songs.remove(0);
     } else {
       this.position++;
     }
-    
-    setChanged();
-    notifyObservers(this);
   }
-
+  
   /**
-   * Set the position to the previous song.
+   * Set the position to the previous osng in the playlist if there is one.
    */
   public void previousSong() {
     if (this.position != 0) {
       this.position--;
     }
-    
-    setChanged();
-    notifyObservers(this);
-  }
-  
-  /**
-   * Return true if the current playing song should be skipped.
-   * 
-   * @return
-   */
-  public boolean shouldSkipCurrent() {
-    return this.skipCurrent;
-  }
-  
-  /**
-   * Toggle the skip current flag.
-   */
-  public void toggleSkipCurrent() {
-    this.skipCurrent = !this.skipCurrent;
   }
   
   /**
@@ -166,7 +141,7 @@ public class Playlist extends Observable {
    */
   public void clear() {
     this.songs.clear();
-    this.position = 0;
+    this.position = -1;
   }
   
   /**
