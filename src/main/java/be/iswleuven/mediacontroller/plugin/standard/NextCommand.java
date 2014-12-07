@@ -2,7 +2,7 @@ package be.iswleuven.mediacontroller.plugin.standard;
 
 import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
-import be.iswleuven.mediacontroller.player.Playlist;
+import be.iswleuven.mediacontroller.player.Player;
 
 import com.google.inject.Inject;
 
@@ -19,26 +19,25 @@ public class NextCommand extends Command {
   public static final String COMMAND_HELP = "\t\t\tGa naar het volgend liedje in de playlist.";
   
   /**
-   * The playlist instance.
+   * The player instance.
    */
-  private final Playlist playlist;
+  private final Player player;
   
   /**
    * Create a new next command.
    * 
-   * @param playlist
+   * @param player
    * @param plugin
    */
   @Inject
-  public NextCommand(Playlist playlist, StandardPlugin plugin) {
+  public NextCommand(Player player, StandardPlugin plugin) {
     super(plugin);
-    this.playlist = playlist;
+    this.player = player;
   }
 
   @Override
   public void execute() throws CommandException {
-    this.playlist.toggleSkipCurrent();
-    this.playlist.nextSong();
+    this.player.next();
   }
 
 }
