@@ -17,7 +17,7 @@ public class UndoCommand extends Command {
   /**
    * The command help string.
    */
-  public static final String COMMAND_HELP = "\t\tVerwijder het laatst toegevoegde liedje.";
+  public static final String COMMAND_HELP = "\t\t\tVerwijder het laatst toegevoegde liedje.";
   
   /**
    * The playlist instance.

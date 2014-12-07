@@ -39,6 +39,8 @@ public class CommandBus extends Observable {
    * @throws CommandException
    */
   public void send(String command, Worker worker) throws CommandException {
+    command = command.toLowerCase();
+    
     add(commandFactory.createCommand(command, worker));
   }
   

@@ -19,12 +19,12 @@ public class DoorCommand extends Command {
   /**
    * The command aliases.
    */
-  public static String[] COMMAND_ALIASES = { "O", "deur", "sesam", "openu" };
+  public static String[] COMMAND_ALIASES = { "deur", "sesam", "openu" };
 
   /**
    * The command help string.
    */
-  public static String COMMAND_HELP = "Doe 'o', dit opent de ISW deur";
+  public static String COMMAND_HELP = "\tOpen de deur van ISW.";
 
   /**
    * Create a new door command.
