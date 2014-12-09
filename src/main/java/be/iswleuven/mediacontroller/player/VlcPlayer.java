@@ -83,15 +83,17 @@ public class VlcPlayer extends Player implements MediaPlayerEventListener, Obser
   }
   
   @Override
-  public void next() {    
-    getPlaylist().nextSong();
-    play();
+  public void next() {
+    if (getPlaylist().nextSong()) {
+      play();
+    }
   }
   
   @Override
   public void previous() {
-    getPlaylist().previousSong();
-    play();
+    if (getPlaylist().previousSong()) {
+      play();
+    }
   }
 
   @Override

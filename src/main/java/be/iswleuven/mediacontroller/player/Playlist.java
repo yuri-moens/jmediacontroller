@@ -104,11 +104,11 @@ public class Playlist extends Observable {
   }
   
   /**
-   * Set the position to the next song in the playlist if there is one.
+   * Set the position to the next song in the playlist and return true if there is one.
    */
-  public void nextSong() {
+  public boolean nextSong() {
     if (this.position == this.songs.size() - 1) {
-      return;
+      return false;
     }
     
     if (this.position == this.MAX_HISTORY_SIZE) {
@@ -116,15 +116,21 @@ public class Playlist extends Observable {
     } else {
       this.position++;
     }
+    
+    return true;
   }
   
   /**
-   * Set the position to the previous osng in the playlist if there is one.
+   * Set the position to the previous song in the playlist and return true if there is one.
    */
-  public void previousSong() {
+  public boolean previousSong() {
     if (this.position != 0) {
       this.position--;
+      
+      return true;
     }
+    
+    return false;
   }
   
   /**
