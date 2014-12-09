@@ -8,7 +8,7 @@ public class JPlaylistPlugin extends Plugin {
    * Create a new JPlaylist plugin.
    */
   public JPlaylistPlugin() {
-    super("JPlaylistPlugin", "1.0", "jpl", "Yuri Moens");
+    super("JPlaylistPlugin", "1.0.0", "jpl", "Yuri Moens");
   }
 
   @Override

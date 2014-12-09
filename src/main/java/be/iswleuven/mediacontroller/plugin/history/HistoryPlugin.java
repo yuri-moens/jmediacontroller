@@ -8,7 +8,7 @@ public class HistoryPlugin extends Plugin {
    * Create a new history plugin.
    */
   public HistoryPlugin() {
-    super("HistoryPlugin", "1.0", "history", "Yuri Moens");
+    super("HistoryPlugin", "1.0.0", "history", "Yuri Moens");
   }
 
   @Override

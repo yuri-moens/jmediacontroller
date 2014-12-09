@@ -8,7 +8,7 @@ public class RadioPlugin extends Plugin {
    * Create a new radio plugin.
    */
   public RadioPlugin() {
-    super("RadioPlugin", "1.0", "radio", "Yuri Moens");
+    super("RadioPlugin", "1.0.0", "radio", "Yuri Moens");
   }
 
   @Override

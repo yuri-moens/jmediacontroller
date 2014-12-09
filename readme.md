@@ -31,3 +31,18 @@ Pull requests worden niet aanvaardt als de code ondermaats is of als de code de 
 De style guide is hier te vinden: https://google-styleguide.googlecode.com/svn/trunk/javaguide.html
 
 Om de style guide makkelijk te volgen kan men in Eclipse de XML importeren voor deze coding style: https://code.google.com/p/google-styleguide/source/browse/trunk/eclipse-java-google-style.xml
+
+#### Versioning
+
+In dit project wordt Semantic Versioning gebruikt. Hier volgt snel hoe de versioning gebeurt in dit project.
+
+De MediaController zelf heeft een versie nummer in de MediaController klasse en in de pom.xml. Beide nummers moeten **altijd** gelijk zijn aan elkaar. Daarnaast hebben alle plugins zelf ook een versienummer. Al deze nummers worden op dezelfde manier aangepast.
+
+Stel dat we beginnen bij versienummer 1.0.0 bij alle plugins en de MediaController.
+
+1. Er gebeurt een bugfix in de MediaController. De versie van de MediaController gaat naar 1.0.1.
+2. Er wordt nieuwe functionaliteit toegevoegd aan de MediaController. De versie gaat naar 1.1.1.
+3. Er gebeurt een bugfix in een van de commando's van de StandardPlugin. De versie van de StandardPlugin gaat naar 1.0.1. De versie van de MediaController gaat naar 1.1.2.
+4. Er wordt een nieuw commando geschreven voor de StandardPlugin of een bestaand commando krijgt extra functionaliteiten. De versie van de StandardPlugin gaat naar 1.1.1. De versie van de MediaController gaat naar 1.2.2.
+
+Het eerste getal van de versie gaat enkel omhoog als een grote update gebeurd die mogelijk backwards compatibility breekt.
