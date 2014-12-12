@@ -2,6 +2,7 @@ package be.iswleuven.mediacontroller;
 
 import java.io.File;
 
+import be.iswleuven.mediacontroller.admin.AdminHandler;
 import be.iswleuven.mediacontroller.command.CommandHandler;
 import be.iswleuven.mediacontroller.config.ConfigLoader;
 import be.iswleuven.mediacontroller.dependency.DependencyHandler;
@@ -17,7 +18,7 @@ public class MediaController {
   /**
    * The version of the MediaController.
    */
-  public static final String VERSION = "1.0.1";
+  public static final String VERSION = "1.1.1";
   
   /**
    * Specify if the controller should be verbose.
@@ -40,6 +41,7 @@ public class MediaController {
     injector.getInstance(PluginHandler.class);
     injector.getInstance(CommandHandler.class);
     injector.getInstance(DependencyHandler.class);
+    injector.getInstance(AdminHandler.class);
     injector.getInstance(Player.class);
   }
   

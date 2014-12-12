@@ -72,10 +72,20 @@ public class Config {
 
   /**
    * Get the Youtube API key.
+   * 
    * @return
    */
   public String getYoutubeApiKey() {
     return properties.getProperty("YoutubeApiKey");
+  }
+  
+  /**
+   * Get the admin password.
+   * 
+   * @return
+   */
+  public String getPassword() {
+    return properties.getProperty("adminPassword");
   }
   
   /**
@@ -92,6 +102,7 @@ public class Config {
     properties.setProperty("maxHistorySize", "100");
     properties.setProperty("YoutubeApiKey", "");
     properties.setProperty("vlcLocation", "");
+    properties.setProperty("adminPassword", "");
     
     return properties;
   }

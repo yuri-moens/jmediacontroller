@@ -2,7 +2,9 @@ package be.iswleuven.mediacontroller.plugin.admin;
 
 import java.util.Map;
 
+import be.iswleuven.mediacontroller.admin.AdminHandler;
 import be.iswleuven.mediacontroller.command.Command;
+import be.iswleuven.mediacontroller.command.CommandException;
 import be.iswleuven.mediacontroller.server.Server;
 import be.iswleuven.mediacontroller.server.ServerHandler;
 
@@ -18,13 +20,18 @@ public class ServerCommand extends Command {
   /**
    * The command help string.
    */
-  public static final String COMMAND_HELP = " list - Geef een lijst van alle beschikbare servers.\n"
-      + "\t start|stop|restart <server name|all> - Start, stop of herstart een/alle server(s).";
+  public static final String COMMAND_HELP = " list\t\tGeef een lijst van alle beschikbare servers.\n"
+      + "\t start|stop|restart <server name|all>\tStart, stop of herstart een/alle server(s).";
+  
+  /**
+   * The admin handler instance.
+   */
+  private final AdminHandler adminHandler;
   
   /**
    * The server handler instance.
    */
-  private ServerHandler serverHandler;
+  private final ServerHandler serverHandler;
   
   /**
    * Create a new admin server command.
@@ -32,13 +39,18 @@ public class ServerCommand extends Command {
    * @param serverHandler
    */
   @Inject
-  public ServerCommand(AdminPlugin plugin, ServerHandler serverHandler) {
+  public ServerCommand(AdminHandler adminHandler, AdminPlugin plugin, ServerHandler serverHandler) {
     super(plugin);
+    this.adminHandler = adminHandler;
     this.serverHandler = serverHandler;
   }
   
   @Override
-  public void execute() {
+  public void execute() throws CommandException {
+    if (!adminHandler.isAdmin(getWorker())) {
+      throw new NoAdminException();
+    }
+    
     switch (this.parameters[0]) {
       case "list": list();
         break;

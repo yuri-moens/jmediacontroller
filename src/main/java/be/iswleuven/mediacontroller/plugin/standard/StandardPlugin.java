@@ -8,11 +8,12 @@ public class StandardPlugin extends Plugin {
    * Create a new standard plugin.
    */
   public StandardPlugin() {
-    super("StandardPlugin", "1.0.0", "default", "Yuri Moens");
+    super("StandardPlugin", "1.1.0", "default", "Yuri Moens");
   }
 
   @Override
   public void initializeCommands() {
+    registerCommand(BlockCommand.class);
     registerCommand(CurrentCommand.class);
     registerCommand(DoorCommand.class);
     registerCommand(MuteCommand.class);

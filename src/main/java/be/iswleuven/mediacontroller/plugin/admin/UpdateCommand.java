@@ -1,5 +1,6 @@
 package be.iswleuven.mediacontroller.plugin.admin;
 
+import be.iswleuven.mediacontroller.admin.AdminHandler;
 import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
 import be.iswleuven.mediacontroller.dependency.Dependency;
@@ -18,26 +19,38 @@ public class UpdateCommand extends Command {
   /**
    * The command help string.
    */
-  public static final String COMMAND_HELP = "\tUpdate de mediacontroller en de dependencies.";
+  public static final String COMMAND_HELP = "\t\tUpdate de mediacontroller en de dependencies.";
+  
+  /**
+   * The admin handler instance.
+   */
+  private final AdminHandler adminHandler;
   
   /**
    * The dependency handler instance.
    */
-  public final DependencyHandler dependencyHandler;
+  private final DependencyHandler dependencyHandler;
   
   /**
    * Create a new update command.
    * 
+   * @param adminHandler
    * @param plugin
+   * @param dependencyHandler
    */
   @Inject
-  public UpdateCommand(AdminPlugin plugin, DependencyHandler dependencyHandler) {
+  public UpdateCommand(AdminHandler adminHandler, AdminPlugin plugin, DependencyHandler dependencyHandler) {
     super(plugin);
+    this.adminHandler = adminHandler;
     this.dependencyHandler = dependencyHandler;
   }
 
   @Override
   public void execute() throws CommandException {
+    if (!adminHandler.isAdmin(getWorker())) {
+      throw new NoAdminException();
+    }
+    
     try {
       for (Dependency dependency : this.dependencyHandler.getDependencies()) {
         if (! dependency.isInstalled()) {

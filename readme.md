@@ -11,7 +11,7 @@
 
 1. Zet de aangemaakte jar die in de target map te vinden is op de mediacontroller.
 2. Start de mediacontroller om een standaard configuratiebestand aan te maken.
-3. Voeg de YouTube API key toe aan het configuratiebestand (~/.mediacontroller/mc.conf)
+3. Voeg de YouTube API key en een admin wachtwoord (gehashed met SHA-256) toe aan het configuratiebestand (~/.mediacontroller/mc.conf)
 4. Start de mediacontroller opnieuw (liefst in een screen).
 5. Verbind met de mediacontroller via netcat en voer het commando "admin update" uit om alle dependencies te installeren.
 

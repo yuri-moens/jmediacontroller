@@ -14,7 +14,7 @@ import be.iswleuven.mediacontroller.MediaController;
 import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
 
-public class SocketServerWorker implements Runnable, Worker {
+public class SocketServerWorker extends Worker {
 
   /**
    * The logger instance.
@@ -86,9 +86,15 @@ public class SocketServerWorker implements Runnable, Worker {
         out.flush();
       }
     } catch (IOException e) {
+      
+    } finally {
+      setChanged();
+      notifyObservers(this);
+      
       if (MediaController.verbose) {
         System.out.println("Verbinding verbroken.");
       }
+      
       logger.log(Level.INFO, "Closed connection with client with address: " + clientSocket.getInetAddress().toString());
     }
   }
