@@ -8,12 +8,13 @@ public class AdminPlugin extends Plugin {
    * Create a new admin plugin.
    */
   public AdminPlugin() {
-    super("AdminPlugin", "1.1.0", "admin", "Yuri Moens");
+    super("AdminPlugin", "1.2.0", "admin", "Yuri Moens");
   }
 
   @Override
   public void initializeCommands() {
     registerCommand(LoginCommand.class);
+    registerCommand(LogoutCommand.class);
     registerCommand(ServerCommand.class);
     registerCommand(UpdateCommand.class);
   }
