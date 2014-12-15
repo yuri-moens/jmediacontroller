@@ -33,6 +33,10 @@ public class Song {
    * @param url
    */
   public Song(String title, String url, InetAddress clientAddress) {
+    if (title == null || url == null || clientAddress == null) {
+      throw new IllegalArgumentException("Title, url and client address may not be null.");
+    }
+    
     this.TITLE = title;
     this.URL = url;
     this.CLIENT_ADDRESS = clientAddress;
