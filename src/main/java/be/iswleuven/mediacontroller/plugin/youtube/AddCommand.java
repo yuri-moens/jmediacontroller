@@ -3,6 +3,7 @@ package be.iswleuven.mediacontroller.plugin.youtube;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -20,6 +21,8 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.model.PlaylistItem;
+import com.google.api.services.youtube.model.PlaylistItemListResponse;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.inject.Inject;
@@ -34,7 +37,7 @@ public class AddCommand extends Command {
   /**
    * The command help string.
    */
-  public static final String COMMAND_HELP = "<title|url>";
+  public static final String COMMAND_HELP = "<title|url>\tGeef de titel of de URL van de video of playlist.";
   
   /**
    * The YouTube API handler.
@@ -75,9 +78,27 @@ public class AddCommand extends Command {
   public void execute() throws CommandException {
     String query = StringUtils.join(getParameters(), " ");
     
-    String[] youtubeInfo = getYoutubeInfo(query);
+    try {
+      if (query.contains("&list")) {
+        List<String[]> videoInfos = parsePlaylist(query);
+        
+        for (String[] videoInfo : videoInfos) {
+          this.playlist.addSong(new Song(videoInfo[0], parseUrl(videoInfo[1]), getWorker().getAddress()));
+        }
+        
+        setMessage(videoInfos.size() + " liedjes toegevoegd aan de playlist.");
+      } else {
+        String[] youtubeInfo = getYoutubeInfo(query);
+      
+        this.playlist.addSong(new Song(youtubeInfo[0], parseUrl(youtubeInfo[1]), getWorker().getAddress()));
+        
+        setMessage(youtubeInfo[0] + " toegevoegd aan de playlist.");
+      }
+    } catch (IllegalArgumentException e) {
+      throw new CommandException("Liedje werd niet gevonden.");
+    }
     
-    this.playlist.addSong(new Song(youtubeInfo[0], parseUrl(youtubeInfo[1]), getWorker().getAddress()));
+    notifyWorker();
   }
 
   /**
@@ -112,6 +133,43 @@ public class AddCommand extends Command {
     }
     
     return url;
+  }
+  
+  /**
+   * Get the video information for the videos in the given YouTube playlist url.
+   * 
+   * @param playlistUrl
+   * @return
+   */
+  private List<String[]> parsePlaylist(String playlistUrl) {
+    String playlistId = playlistUrl.replaceAll(".*&list=", "");
+    List<String[]> videoInfos = new ArrayList<String[]>();
+    
+    try {
+      YouTube.PlaylistItems.List search = AddCommand.youtube.playlistItems().list("id,snippet");
+      
+      search.setKey(this.config.getYoutubeApiKey());
+      search.setPlaylistId(playlistId);
+      search.setMaxResults(50L);
+      
+      PlaylistItemListResponse response = search.execute();
+      List<PlaylistItem> results = response.getItems();
+      
+      if (results != null) {
+        for (PlaylistItem item : results) {
+          String[] videoInfo = new String[2];
+          
+          videoInfo[0] = item.getSnippet().getTitle();
+          videoInfo[1] = "https://www.youtube.com/watch?v=" + item.getSnippet().getResourceId().getVideoId();
+          
+          videoInfos.add(videoInfo);
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    
+    return videoInfos;
   }
   
   /**
