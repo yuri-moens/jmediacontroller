@@ -21,7 +21,7 @@ public class VolumeCommand extends Command {
   /**
    * The command help string.
    */
-  public static final String COMMAND_HELP = " <level>\tZet het volumeniveau.";
+  public static final String COMMAND_HELP = " [level]\tZet het volumeniveau of geef het huidig niveau weer.";
   
   /**
    * The player instance.
@@ -44,8 +44,11 @@ public class VolumeCommand extends Command {
   public void execute() throws CommandException {
     try {
       this.player.setVolume(Integer.parseInt(getParameters()[0]));
-    } catch (Exception e) {
+    } catch (NumberFormatException e) {
       throw new CommandException("Volumeniveau moet een getal zijn.");
+    } catch (Exception e) {
+      setMessage("Volume: " + this.player.getVolume() + "%");
+      notifyWorker();
     }
   }
   

@@ -40,6 +40,9 @@ public class VolumeUpCommand extends Command {
     int symbolAmount = getParameters().length > 0 ? getParameters()[0].length() + 1 : 1;
     
     this.player.changeVolume(5 * symbolAmount);
+    
+    setMessage("Volume: " + this.player.getVolume() + "%");
+    notifyWorker();
   }
 
 }
