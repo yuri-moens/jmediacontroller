@@ -79,14 +79,24 @@ public class AddCommand extends Command {
     String query = StringUtils.join(getParameters(), " ");
     
     try {
-      if (query.contains("&list")) {
+      if (query.contains("list=")) {
         List<String[]> videoInfos = parsePlaylist(query);
         
+        int notFound = 0;
+        
         for (String[] videoInfo : videoInfos) {
-          this.playlist.addSong(new Song(videoInfo[0], parseUrl(videoInfo[1]), getWorker().getAddress()));
+          try {
+            this.playlist.addSong(new Song(videoInfo[0], parseUrl(videoInfo[1]), getWorker().getAddress()));
+          } catch (IllegalArgumentException e) {
+            notFound++;
+          }
         }
         
         setMessage(videoInfos.size() + " liedjes toegevoegd aan de playlist.");
+        
+        if (notFound > 0) {
+          setMessage(getMessage() + "\n" + notFound + " liedjes werden niet gevonden.");
+        }
       } else {
         String[] youtubeInfo = getYoutubeInfo(query);
       
@@ -142,7 +152,8 @@ public class AddCommand extends Command {
    * @return
    */
   private List<String[]> parsePlaylist(String playlistUrl) {
-    String playlistId = playlistUrl.replaceAll(".*&list=", "");
+    String playlistId = playlistUrl.replaceAll(".*list=", "");
+    playlistId = playlistId.replaceAll("&.*", "");
     List<String[]> videoInfos = new ArrayList<String[]>();
     
     try {
@@ -152,8 +163,17 @@ public class AddCommand extends Command {
       search.setPlaylistId(playlistId);
       search.setMaxResults(50L);
       
-      PlaylistItemListResponse response = search.execute();
-      List<PlaylistItem> results = response.getItems();
+      List<PlaylistItem> results = new ArrayList<PlaylistItem>();
+      String nextToken = "";
+      
+      do {
+        search.setPageToken(nextToken);
+        
+        PlaylistItemListResponse response = search.execute();
+        results.addAll(response.getItems());
+        
+        nextToken = response.getNextPageToken();
+      } while (nextToken != null);
       
       if (results != null) {
         for (PlaylistItem item : results) {
