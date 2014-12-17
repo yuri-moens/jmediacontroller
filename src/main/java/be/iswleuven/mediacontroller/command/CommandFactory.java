@@ -50,9 +50,9 @@ public class CommandFactory {
     Plugin plugin = getPlugin(rawCommandArray[0]);
     
     String commandString;
-    String[] parameters;
+    String[] parameters = null;
     
-    Class<? extends Command> commandClass;
+    Class<? extends Command> commandClass = null;
     
     if (plugin.getName().equals("StandardPlugin")) {
       commandString = rawCommandArray[0];
@@ -61,8 +61,6 @@ public class CommandFactory {
     } else {
       try {
         commandString = rawCommandArray[1];
-      
-        commandClass = findCommandClass(plugin, commandString);
         
         if (plugin.getCommands().containsKey(commandString)) {
           parameters = parseParametersFromRawCommandArray(rawCommandArray, 2);        
@@ -70,8 +68,10 @@ public class CommandFactory {
           parameters = parseParametersFromRawCommandArray(rawCommandArray, 1);        
         }
       } catch (ArrayIndexOutOfBoundsException e) {
-        throw new NoParameterException();
+        commandString = "default";
       }
+    
+      commandClass = findCommandClass(plugin, commandString);
     }
     
     Command command = null;
