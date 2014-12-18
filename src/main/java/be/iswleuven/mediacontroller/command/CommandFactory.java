@@ -69,6 +69,8 @@ public class CommandFactory {
         }
       } catch (ArrayIndexOutOfBoundsException e) {
         commandString = "default";
+        
+        parameters = new String[0];
       }
     
       commandClass = findCommandClass(plugin, commandString);

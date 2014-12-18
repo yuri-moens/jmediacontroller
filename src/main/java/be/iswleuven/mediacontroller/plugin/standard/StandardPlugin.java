@@ -8,7 +8,7 @@ public class StandardPlugin extends Plugin {
    * Create a new standard plugin.
    */
   public StandardPlugin() {
-    super("StandardPlugin", "1.2.0", "default", "Yuri Moens");
+    super("StandardPlugin", "1.2.1", "default", "Yuri Moens");
   }
 
   @Override

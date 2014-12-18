@@ -39,10 +39,12 @@ public class VolumeDownCommand extends Command {
   public void execute() throws CommandException {
     int symbolAmount = getParameters().length > 0 ? getParameters()[0].length() + 1 : 1;
     
-    this.player.changeVolume(-5 * symbolAmount);
+    int volume = -5 * symbolAmount;
     
-    setMessage("Volume: " + this.player.getVolume() + "%");
+    setMessage("Volume: " + this.player.getVolume() + volume + "%");
     notifyWorker();
+    
+    this.player.changeVolume(volume);
   }
 
 }

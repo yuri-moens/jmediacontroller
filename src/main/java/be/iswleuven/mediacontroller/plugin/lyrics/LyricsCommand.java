@@ -52,7 +52,7 @@ public class LyricsCommand extends Command {
       setMessage(lyrics);
       notifyWorker();
     } catch (Exception e) {
-      throw new CommandException("Fout bij het zoeken van de lyrihelpcs.");
+      throw new CommandException("Fout bij het zoeken van de lyrics.");
     }
   }
   
