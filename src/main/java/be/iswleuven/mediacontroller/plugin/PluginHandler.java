@@ -1,6 +1,5 @@
 package be.iswleuven.mediacontroller.plugin;
 
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,6 +11,7 @@ import org.apache.log4j.Logger;
 import be.iswleuven.mediacontroller.config.Config;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.metapossum.utils.scanner.ResourceNameFilter;
 import com.metapossum.utils.scanner.reflect.ClassesInPackageScanner;
@@ -30,10 +30,17 @@ public class PluginHandler {
   private Map<String, Plugin> plugins;
   
   /**
+   * The app injector.
+   */
+  private final Injector injector;
+  
+  /**
    * Create a new plugin handler.
    */
   @Inject
-  public PluginHandler(Config config) {
+  public PluginHandler(Config config, Injector injector) {
+    this.injector = injector;
+    
     plugins = new HashMap<String, Plugin>();
     addPlugins(config.getPlugins());
   }
@@ -66,9 +73,7 @@ public class PluginHandler {
           Iterator<Class<?>> iterator = pluginClasses.iterator();
           Class<?> pluginClass = iterator.next();
           
-          Constructor<?> constructor = pluginClass.getConstructor();
-          
-          Plugin pluginInstance = (Plugin) constructor.newInstance();
+          Plugin pluginInstance = (Plugin) this.injector.getInstance(pluginClass);
           
           this.plugins.put(pluginInstance.getCommandNamespace(), pluginInstance);
           

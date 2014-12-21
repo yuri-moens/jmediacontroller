@@ -137,6 +137,15 @@ public class VlcPlayer extends Player implements MediaPlayerEventListener, Obser
   }
 
   @Override
+  public void registerListener(Object listener) throws InvalidPlayerListenerException {
+    if (listener instanceof MediaPlayerEventListener) {
+      this.player.addMediaPlayerEventListener((MediaPlayerEventListener) listener);
+    } else {
+      throw new InvalidPlayerListenerException("MediaPlayerEventListener");
+    }
+  }
+
+  @Override
   public void update(Observable obs, Object o) {
     if (! isPlaying()) {
       next();

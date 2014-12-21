@@ -18,7 +18,7 @@ public class MediaController {
   /**
    * The version of the MediaController.
    */
-  public static final String VERSION = "1.5.4";
+  public static final String VERSION = "1.6.0";
   
   /**
    * Specify if the controller should be verbose.
@@ -36,13 +36,13 @@ public class MediaController {
     }
     
     Injector injector = Guice.createInjector(new AppModule());
-    
+
+    injector.getInstance(Player.class);
     injector.getInstance(ServerHandler.class).startAllServers();
     injector.getInstance(PluginHandler.class);
     injector.getInstance(CommandHandler.class);
     injector.getInstance(DependencyHandler.class);
     injector.getInstance(AdminHandler.class);
-    injector.getInstance(Player.class);
   }
   
   /**

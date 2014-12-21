@@ -176,4 +176,12 @@ public abstract class Player implements Observer {
    */
   public abstract void mute();
   
+  /**
+   * Register the given listener object to the player.
+   * 
+   * @param listener
+   * @throws InvalidPlayerListenerException 
+   */
+  public abstract void registerListener(Object listener) throws InvalidPlayerListenerException;
+  
 }
