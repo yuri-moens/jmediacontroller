@@ -40,8 +40,8 @@ public class LoginCommand extends Command {
   public void execute() throws CommandException {
     try {
       adminHandler.logIn(getParameters()[0], getWorker());
+      
       setMessage("Ingelogd!");
-      notifyWorker();
     } catch (FailedLoginException e) {
       throw new CommandException(e.getMessage());
     }

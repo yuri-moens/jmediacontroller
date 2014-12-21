@@ -4,11 +4,6 @@ import be.iswleuven.mediacontroller.plugin.Plugin;
 import be.iswleuven.mediacontroller.server.Worker;
 
 public abstract class Command {
-
-  /**
-   * The command string.
-   */
-  public static final String COMMAND_STRING = null;
   
   /**
    * The parameters array.
@@ -28,7 +23,7 @@ public abstract class Command {
   /**
    * The plugin associated with the command.
    */
-  protected final Plugin PLUGIN;
+  protected final Plugin plugin;
   
   /**
    * Create a new command.
@@ -36,7 +31,7 @@ public abstract class Command {
    * @param plugin
    */
   public Command(Plugin plugin) {
-    this.PLUGIN = plugin;
+    this.plugin = plugin;
   }
   
   /**
@@ -67,12 +62,26 @@ public abstract class Command {
   }
   
   /**
-   * Set the output message.
+   * Set the output message and notify the worker.
    * 
    * @param message
    */
   public void setMessage(String message) {
+    setMessage(message, true);
+  }
+  
+  /**
+   * Set the output message and notify the worker if requested.
+   * 
+   * @param message
+   * @param notify
+   */
+  public void setMessage(String message, boolean notify) {
     this.message = message;
+    
+    if (notify) {
+      notifyWorker();
+    }
   }
   
   /**

@@ -107,8 +107,6 @@ public class AddCommand extends Command {
     } catch (IllegalArgumentException e) {
       throw new CommandException("Liedje werd niet gevonden.");
     }
-    
-    notifyWorker();
   }
 
   /**

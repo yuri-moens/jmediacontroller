@@ -7,13 +7,13 @@ public class Config {
   /**
    * The configuration properties.
    */
-  private Properties properties;
+  private final Properties properties;
   
   /**
    * Create a config object with default properties.
    */
   public Config() {
-    this.properties = getDefaultProperties();
+    this(getDefaultProperties());
   }
   
   /**

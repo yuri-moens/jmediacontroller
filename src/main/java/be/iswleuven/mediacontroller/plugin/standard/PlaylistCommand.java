@@ -54,8 +54,6 @@ public class PlaylistCommand extends Command {
     }
     
     setMessage(output);
-    
-    notifyWorker();
   }
 
 }

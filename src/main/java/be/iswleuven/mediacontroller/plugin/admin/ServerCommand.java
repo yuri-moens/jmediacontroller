@@ -61,8 +61,6 @@ public class ServerCommand extends Command {
       case "restart": restart(this.parameters[1]);
         break;
     }
-    
-    notifyWorker();
   }
   
   private void list() {

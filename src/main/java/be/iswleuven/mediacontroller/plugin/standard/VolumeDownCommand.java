@@ -43,7 +43,6 @@ public class VolumeDownCommand extends Command {
     int currentVolume = this.player.getVolume() + volume < 0 ? 0 : this.player.getVolume() + volume;
     
     setMessage("Volume: " + currentVolume + "%");
-    notifyWorker();
     
     this.player.changeVolume(volume);
   }

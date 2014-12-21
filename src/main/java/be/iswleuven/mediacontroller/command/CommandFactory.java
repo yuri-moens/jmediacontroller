@@ -24,6 +24,7 @@ public class CommandFactory {
   /**
    * Create a new command factory.
    * 
+   * @param injector
    * @param pluginHandler
    */
   @Inject

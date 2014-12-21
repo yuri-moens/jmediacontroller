@@ -18,9 +18,9 @@ public class CommandHandler implements Observer {
   private final AdminHandler adminHandler;
   
   /**
-   * The instance of the command bus.
+   * The command bus instance.
    */
-  private CommandBus commandBus;
+  private final CommandBus commandBus;
   
   /**
    * Flag to block commands from executing.
@@ -79,19 +79,16 @@ public class CommandHandler implements Observer {
     try {
       if (blocked
           && command.getWorker() != blockingWorker
-          && !command.PLUGIN.getName().equals("AdminPlugin")
+          && !command.plugin.getName().equals("AdminPlugin")
           && !adminHandler.isAdmin(command.getWorker())) {
         command.setMessage("De mediacontroller werd geblokkeerd door " + blockingWorker.getAddress());
-        command.notifyWorker();
       } else {
         command.execute();
       }
     } catch (CommandException e) {
       command.setMessage(e.getMessage());
-      command.notifyWorker();
     } catch (ArrayIndexOutOfBoundsException ee) {
       command.setMessage("Er werd een foute hoeveelheid parameters opgegeven.");
-      command.notifyWorker();
     }
   }
 }

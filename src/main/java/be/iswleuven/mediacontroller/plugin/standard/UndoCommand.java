@@ -45,8 +45,6 @@ public class UndoCommand extends Command {
     } else {
       setMessage("Geen liedje gevonden om te verwijderen.");
     }
-    
-    notifyWorker();
   }
 
 }

@@ -110,7 +110,6 @@ public class TopCommand extends Command {
       }
       
       setMessage(output);
-      notifyWorker();
     } catch (FileNotFoundException e) {
       throw new CommandException("Geen geschiedenis gevonden.");
     }

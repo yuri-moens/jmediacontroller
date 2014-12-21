@@ -38,7 +38,6 @@ public class LogoutCommand extends Command {
     adminHandler.logOut();
     
     setMessage("Uitgelogd!");
-    notifyWorker();
   }
 
 }

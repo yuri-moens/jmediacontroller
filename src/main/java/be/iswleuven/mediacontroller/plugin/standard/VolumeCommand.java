@@ -48,7 +48,6 @@ public class VolumeCommand extends Command {
       throw new CommandException("Volumeniveau moet een getal zijn.");
     } catch (Exception e) {
       setMessage("Volume: " + this.player.getVolume() + "%");
-      notifyWorker();
     }
   }
   

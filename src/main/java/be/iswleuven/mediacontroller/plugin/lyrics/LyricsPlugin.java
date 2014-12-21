@@ -8,7 +8,7 @@ public class LyricsPlugin extends Plugin {
    * Create a new lyrics plugin.
    */
   public LyricsPlugin() {
-    super("LyricsPlugin", "1.0.1", "lyrics", "Yuri Moens");
+    super("LyricsPlugin", "1.0.2", "lyrics", "Yuri Moens");
   }
 
   @Override

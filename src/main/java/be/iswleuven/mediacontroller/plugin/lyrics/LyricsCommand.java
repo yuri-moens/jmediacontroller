@@ -50,7 +50,6 @@ public class LyricsCommand extends Command {
       String lyrics = getLyricsFromPage(lyricsPage);
       
       setMessage(lyrics);
-      notifyWorker();
     } catch (Exception e) {
       throw new CommandException("Fout bij het zoeken van de lyrics.");
     }

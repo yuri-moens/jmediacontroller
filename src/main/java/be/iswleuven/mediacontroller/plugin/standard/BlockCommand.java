@@ -49,8 +49,6 @@ public class BlockCommand extends Command implements Observer {
     } else {
       setMessage("De mediacontroller werd gedeblokkeerd.");
     }
-    
-    notifyWorker();
   }
 
   @Override

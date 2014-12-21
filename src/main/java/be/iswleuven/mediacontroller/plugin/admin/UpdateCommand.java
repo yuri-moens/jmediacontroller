@@ -56,13 +56,11 @@ public class UpdateCommand extends Command {
         if (! dependency.isInstalled()) {
           dependency.install();
           setMessage(dependency.getOutput());
-          notifyWorker();
         }
         
         if (dependency.isOutdated()) {
           dependency.update();
           setMessage(dependency.getOutput());
-          notifyWorker();
         }
       }
     } catch (DependencyException e) {

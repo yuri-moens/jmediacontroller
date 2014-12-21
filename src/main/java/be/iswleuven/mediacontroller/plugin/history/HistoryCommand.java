@@ -93,7 +93,6 @@ public class HistoryCommand extends Command {
     }
     
     setMessage(output);
-    notifyWorker();
   }
   
   /**

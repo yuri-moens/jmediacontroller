@@ -7,7 +7,7 @@ public abstract class Dependency {
   /**
    * The name of the dependency.
    */
-  private final String NAME;
+  private final String name;
   
   /**
    * The file of the dependency.
@@ -25,7 +25,7 @@ public abstract class Dependency {
    * @param name
    */
   public Dependency(String name, File file) {
-    this.NAME = name;
+    this.name = name;
     this.file = file;
   }
   
@@ -35,7 +35,7 @@ public abstract class Dependency {
    * @return
    */
   public String getName() {
-    return this.NAME;
+    return this.name;
   }
   
   /**
@@ -89,6 +89,7 @@ public abstract class Dependency {
   
   /**
    * Check if the dependency is outdated.
+   * 
    * @return
    */
   public abstract boolean isOutdated();

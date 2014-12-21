@@ -44,7 +44,6 @@ public class PluginsCommand extends Command {
     }
     
     setMessage(output);
-    notifyWorker();
   }
   
 }

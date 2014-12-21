@@ -43,7 +43,6 @@ public class VolumeUpCommand extends Command {
     int currentVolume = this.player.getVolume() + volume > 100 ? 100 : this.player.getVolume() + volume;
     
     setMessage("Volume: " + currentVolume + "%");
-    notifyWorker();
     
     this.player.changeVolume(volume);
   }

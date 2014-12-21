@@ -48,7 +48,6 @@ public class ListCommand extends Command {
       }
       
       setMessage(output);
-      notifyWorker();
     } catch (Exception e) {
       e.printStackTrace();
     }

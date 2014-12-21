@@ -16,7 +16,7 @@ public class ConfigLoader {
   /**
    * The logger instance.
    */
-  private final static Logger logger = Logger.getLogger(ConfigLoader.class);
+  private static final Logger logger = Logger.getLogger(ConfigLoader.class);
 
   /**
    * The config instance.

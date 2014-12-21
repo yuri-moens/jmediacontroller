@@ -9,12 +9,12 @@ public class HelpCommand extends Command {
   /**
    * The command string.
    */
-  public static String COMMAND_STRING = "help";
+  public static final String COMMAND_STRING = "help";
   
   /**
    * The command help string.
    */
-  public static String COMMAND_HELP = "";
+  public static final String COMMAND_HELP = "";
   
   /**
    * Create a new help command.
@@ -28,10 +28,10 @@ public class HelpCommand extends Command {
   @Override
   public void execute() throws CommandException {
     try {
-      String output = this.PLUGIN.toString() + "\n\nBeschikbare commando's:\n";
+      String output = this.plugin.toString() + "\n\nBeschikbare commando's:\n";
       
-      for (String value : this.PLUGIN.getCommands().keySet()) {        
-        Class<? extends Command> commandClass = this.PLUGIN.getCommands().get(value);
+      for (String value : this.plugin.getCommands().keySet()) {        
+        Class<? extends Command> commandClass = this.plugin.getCommands().get(value);
         
         Field field = null;
         String commandHelp = value.equals("default") ? "  " : "  " + value;
@@ -61,7 +61,6 @@ public class HelpCommand extends Command {
       }
       
       setMessage(output);
-      notifyWorker();
     } catch (Exception e) {
       throw new CommandException("Geen command help string gevonden.");
     }

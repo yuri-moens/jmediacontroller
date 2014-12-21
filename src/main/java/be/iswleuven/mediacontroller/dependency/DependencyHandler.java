@@ -14,7 +14,7 @@ public class DependencyHandler {
   /**
    * The dependencies directory path.
    */
-  private final String DEPENDENCIES_DIRECTORY;
+  private final String dependenciesDirectory;
   
   /**
    * The map with dependencies.
@@ -26,7 +26,7 @@ public class DependencyHandler {
    */
   @Inject
   public DependencyHandler() {
-    this.DEPENDENCIES_DIRECTORY = System.getProperty("user.home") + "/.mediacontroller/dependencies/";
+    this.dependenciesDirectory = System.getProperty("user.home") + "/.mediacontroller/dependencies/";
     this.dependencies = new HashMap<String, Dependency>();
     
     setupDependencies();
@@ -54,13 +54,13 @@ public class DependencyHandler {
    * Setup the dependencies.
    */
   private void setupDependencies() {
-    File dependenciesDir = new File(DEPENDENCIES_DIRECTORY);
+    File dependenciesDir = new File(dependenciesDirectory);
     
     if (! dependenciesDir.exists()) {
       dependenciesDir.mkdirs();
     }
     
-    this.dependencies.put("youtube-dl", new YoutubeDl("youtube-dl", new File(DEPENDENCIES_DIRECTORY + "youtube-dl")));
+    this.dependencies.put("youtube-dl", new YoutubeDl("youtube-dl", new File(dependenciesDirectory + "youtube-dl")));
   }
   
 }

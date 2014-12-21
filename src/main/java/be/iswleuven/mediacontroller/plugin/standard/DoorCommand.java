@@ -48,7 +48,6 @@ public class DoorCommand extends Command {
       client.close();
       
       setMessage("Deur geopend");
-      notifyWorker();
     } catch (IOException e) {
       throw new CommandException("Deur kon niet gevonden worden of er kon niet heen geschreven worden.");
     }

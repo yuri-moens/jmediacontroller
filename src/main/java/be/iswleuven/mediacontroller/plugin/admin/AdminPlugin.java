@@ -8,7 +8,7 @@ public class AdminPlugin extends Plugin {
    * Create a new admin plugin.
    */
   public AdminPlugin() {
-    super("AdminPlugin", "1.2.0", "admin", "Yuri Moens");
+    super("AdminPlugin", "1.2.1", "admin", "Yuri Moens");
   }
 
   @Override
