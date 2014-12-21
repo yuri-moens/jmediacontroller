@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.apache.commons.codec.binary.Hex;
+import javax.xml.bind.DatatypeConverter;
 
 import be.iswleuven.mediacontroller.config.Config;
 import be.iswleuven.mediacontroller.server.Worker;
@@ -80,6 +80,9 @@ public class AdminHandler implements Observer {
     return this.loggedInWorker == worker;
   }
 
+  /**
+   * Log the user out if the worker changes state.
+   */
   @Override
   public void update(Observable o, Object obs) {
     logOut();
@@ -92,18 +95,14 @@ public class AdminHandler implements Observer {
    * @return
    */
   private String getHash(String password) {
-    MessageDigest sha;
     String output = null;
     
     try {
-      sha = MessageDigest.getInstance("SHA-256");
+      MessageDigest sha = MessageDigest.getInstance("SHA-256");
       sha.update(password.getBytes("UTF-8"));
       byte[] digest = sha.digest();
       
-      output = new String(Hex.encodeHex(digest));
-      while (output.length() < 32) {
-        output += "0" + output;
-      }
+      output = DatatypeConverter.printHexBinary(digest).toLowerCase();
     } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
       e.printStackTrace();
     }
