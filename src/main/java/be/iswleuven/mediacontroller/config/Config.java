@@ -53,6 +53,15 @@ public class Config {
   }
   
   /**
+   * Get the maximum cache size.
+   * 
+   * @return
+   */
+  public int getMaxCacheSize() {
+    return Integer.parseInt(properties.getProperty("maxCacheSize"));
+  }
+  
+  /**
    * Get the maximum history size.
    * 
    * @return
@@ -99,6 +108,7 @@ public class Config {
     properties.setProperty("servers", "SocketServer:3333");
     properties.setProperty("plugins", "StandardPlugin,AdminPlugin,HistoryPlugin,YoutubePlugin,RadioPlugin,RockRadioPlugin,RadioTunesPlugin,JPlaylistPlugin,LyricsPlugin");
     properties.setProperty("player", "VlcPlayer");
+    properties.setProperty("maxCacheSize", "100");
     properties.setProperty("maxHistorySize", "100");
     properties.setProperty("YoutubeApiKey", "");
     properties.setProperty("vlcLocation", "");

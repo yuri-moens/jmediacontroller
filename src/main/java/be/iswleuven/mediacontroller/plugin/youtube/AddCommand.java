@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import be.iswleuven.mediacontroller.cache.Cache;
+import be.iswleuven.mediacontroller.cache.Entry;
 import be.iswleuven.mediacontroller.command.Command;
 import be.iswleuven.mediacontroller.command.CommandException;
 import be.iswleuven.mediacontroller.config.Config;
@@ -25,6 +27,8 @@ import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
+import com.google.api.services.youtube.model.Video;
+import com.google.api.services.youtube.model.VideoListResponse;
 import com.google.inject.Inject;
 
 public class AddCommand extends Command {
@@ -62,13 +66,19 @@ public class AddCommand extends Command {
   private final Dependency youtubeDl;
   
   /**
+   * The song cache.
+   */
+  private final Cache cache;
+  
+  /**
    * Create a new play command.
    * 
    * @param plugin
    */
   @Inject
-  public AddCommand(Config config, DependencyHandler dependencyHandler, Playlist playlist, YoutubePlugin plugin) {
+  public AddCommand(YoutubeCache cache, Config config, DependencyHandler dependencyHandler, Playlist playlist, YoutubePlugin plugin) {
     super(plugin);
+    this.cache = cache;
     this.playlist = playlist;
     this.config = config;
     this.youtubeDl = dependencyHandler.getDependency("youtube-dl");
@@ -98,9 +108,23 @@ public class AddCommand extends Command {
           setMessage(getMessage() + "\n" + notFound + " liedjes werden niet gevonden.");
         }
       } else {
-        String[] youtubeInfo = getYoutubeInfo(query);
-      
-        this.playlist.addSong(new Song(youtubeInfo[0], parseUrl(youtubeInfo[1]), getWorker().getAddress()));
+        final String[] youtubeInfo = getYoutubeInfo(query);
+        
+        if (cache.isCached(youtubeInfo[1])) {
+          Entry entry = cache.read(youtubeInfo[1]);
+          this.playlist.addSong(new Song(entry.getTitle(), entry.getPath(), getWorker().getAddress()));
+        } else {
+          this.playlist.addSong(new Song(youtubeInfo[0], parseUrl(youtubeInfo[1]), getWorker().getAddress()));
+          
+          new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+              cache.write(youtubeInfo[1], youtubeInfo[0], youtubeInfo[2]);
+            }
+            
+          }).start();
+        }
         
         setMessage(youtubeInfo[0] + " toegevoegd aan de playlist.");
       }
@@ -116,31 +140,46 @@ public class AddCommand extends Command {
    * @return
    */
   private String[] getYoutubeInfo(String query) {
-    String[] url = new String[2];
+    String[] youtubeInfo = new String[3];
     
     try {
-      YouTube.Search.List search = AddCommand.youtube.search().list("id,snippet");
+      YouTube.Search.List search = AddCommand.youtube.search().list("id");
       
       search.setKey(this.config.getYoutubeApiKey());
       search.setQ(query);
       search.setType("video");
-      search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
+      search.setFields("items(id/videoId)");
       search.setMaxResults(1L);
       
       SearchListResponse response = search.execute();
       List<SearchResult> results = response.getItems();
+      String videoId = null;
       
-      if (results != null) {
-        for (SearchResult r : results) {
-          url[0] = r.getSnippet().getTitle();
-          url[1] = "https://www.youtube.com/watch?v=" + r.getId().getVideoId();
-        }
+      if (results != null && results.size() == 1) {
+        videoId = results.get(0).getId().getVideoId();
+      }
+      
+      YouTube.Videos.List video = AddCommand.youtube.videos().list("id,snippet,contentDetails");
+      
+      video.setKey(this.config.getYoutubeApiKey());
+      video.setId(videoId);
+      video.setMaxResults(1L);
+      
+      VideoListResponse videoResponse = video.execute();
+      List<Video> videoResults = videoResponse.getItems();
+      
+      if (videoResults != null && videoResults.size() == 1) {
+        Video v = videoResults.get(0);
+        
+        youtubeInfo[0] = v.getSnippet().getTitle();
+        youtubeInfo[1] = "https://www.youtube.com/watch?v=" + v.getId();
+        youtubeInfo[2] = v.getContentDetails().getDuration();
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
     
-    return url;
+    return youtubeInfo;
   }
   
   /**
