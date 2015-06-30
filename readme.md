@@ -15,7 +15,7 @@ User messages are in Dutch, sorry for that. I have no intention of translating i
 1. Make sure maven is installed.
 2. Enter the following command in the root directory (the one with pom.xml): mvn clean compile assembly:single
 
-#### Installeer
+#### Install
 
 1. Put the created jar found in the target folder on your machine.
 2. Start the mediacontroller to let it create a default configuration file.
